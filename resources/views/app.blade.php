@@ -7,15 +7,17 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>KOMOBOX</title>
+    <title>komobox - @yield('head')</title>
 
     <meta name="description" content="" />
 
-    @include('link-asset.head')
+    @include('link-asset.head')    
+    @yield('style')
 
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -33,6 +35,7 @@
                 <div class="content-wrapper">
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
+                        <h4 class="fw-bold py-2 mb-4"><span class="text-muted fw-light">@yield('title1')</span> @yield('title2')</h4>
                         @yield('content')
                     </div>
                     <!-- / Content -->
@@ -57,5 +60,6 @@
         @include('link-asset.script')
     <!--/ script-->
 </body>
+
 
 </html>
