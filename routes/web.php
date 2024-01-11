@@ -29,7 +29,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product', [ProdukController::class, 'index'])->name('index.produk');
 
     // sub kategori produk
-    Route::get('/sub-ctgr-product', [SubCtgrProductController::class, 'index'])->name('index.subCtgrProduct');
+    Route::get('/sub-ctgr-product', [SubCtgrProductController::class, 'showData'])->name('index.subCtgrProduct');
+    Route::post('/add-sub-ctgr-product', [SubCtgrProductController::class, 'store'])->name('store.subCtgrProduct');
+    Route::post('/edit-sub-ctgr-product/{id}', [SubCtgrProductController::class, 'editSubCtgr'])->name('edit.subCtgrProduct');
+    Route::delete('/delete-sub-ctgr-product/{id}', [SubCtgrProductController::class, 'deleteDataSubCtgr'])->name('delete.subCtgrProduct');
 
     // kategori produk
     Route::get('/ctgr-product', [CtgrProdukController::class, 'showData'])->name('index.ctgrProduct');

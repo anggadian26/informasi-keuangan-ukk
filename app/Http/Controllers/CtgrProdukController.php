@@ -42,10 +42,6 @@ class CtgrProdukController extends Controller
 
         $total = DB::select($queryCount);
 
-        $title = 'Delete User!';
-        $text = "Are you sure you want to delete?";
-        confirmDelete($title, $text);
-
         return view('ctgr-produk.index', compact(['kategori', 'total']));
     }
 

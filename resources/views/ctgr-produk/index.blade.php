@@ -23,7 +23,7 @@
                     <input name="ctgr_product_code" type="text" class="form-control" placeholder="Kode Kategori"
                         value="{{ isset($_GET['ctgr_product_code']) ? $_GET['ctgr_product_code'] : '' }}">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="" class="fw-bold">Nama Kategori</label>
                     <input name="ctgr_product_name" type="text" class="form-control" placeholder="Nama Kategori"
                         value="{{ isset($_GET['ctgr_product_name']) ? $_GET['ctgr_product_name'] : '' }}">
@@ -32,17 +32,15 @@
                     <label for="" class="fw-bold">Status</label>
                     <select name="status" class="form-select">
                         <option value="">- Semua -</option>
-                        <option value="Y">Aktif</option>
-                        <option value="N">Tidak Aktif</option>
+                        <option value="Y" {{ isset($_GET['status']) && $_GET['status'] == 'Y' ? 'selected' : '' }}>Aktif</option>
+                        <option value="N" {{ isset($_GET['status']) && $_GET['status'] == 'N' ? 'selected' : '' }}>Tidak Aktif</option>
                     </select>
                 </div>
-
-
                 <div class="col-md-4">
                     <button type="submit" class="btn btn-primary mt-4 btn-cari">Cari</button>
                 </div>
             </div>
-        </form>
+        </form> 
         <div class="table-responsive text-nowrap mt-4">
             <table class="table table-striped table-hover">
                 <thead>
