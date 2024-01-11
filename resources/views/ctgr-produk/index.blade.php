@@ -12,7 +12,7 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCtgrProduct">
                 Tambah Data
             </button>
-            @include('ctgr-produk.modalAddCtgr')
+            @include('ctgr-produk.modal.modalAddCtgr')
         </div>
 
         <form action="#" method="get" class="mb-3">
@@ -60,21 +60,31 @@
                         </tr>
                     @else
                         @foreach ($kategori as $i)
+                            @include('ctgr-produk.modal.modalDelCtgr')
+                            @include('ctgr-produk.modal.modalDetailCtgr')
+                            @include('ctgr-produk.modal.modalEditCtgr')
                             <tr>
                                 <td>
                                     <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown">
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#"><i class="bx bx-detail me-1"></i>
+                                                data-bs-target="#detailCtgrProduct{{ $i->ctgr_product_id }}"><i
+                                                    class="bx bx-detail me-1 text-primary"></i>
                                                 Detail</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>
-                                                Edit</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
-                                                Delete</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                                                data-bs-target="#editCtgrProduct{{ $i->ctgr_product_id }}"><i
+                                                    class="bx bx-edit-alt me-1 text-warning"></i>
+                                                Ubah</a>
+                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                                                data-bs-target="#delCtgrProduct{{ $i->ctgr_product_id }}"><i
+                                                    class="bx bx-trash-alt me-1 text-danger"></i>
+                                                Hapus</a>
                                         </div>
+                                    </div>
                                 </td>
                                 <td>{{ $i->ctgr_product_code }}</td>
                                 <td>{{ $i->ctgr_product_name }}</td>
@@ -84,7 +94,7 @@
                                     @else
                                         <span class="badge rounded-pill bg-danger">Tidak Aktif</span>
                                     @endif
-                                    
+
                                 </td>
                             </tr>
                         @endforeach
@@ -95,23 +105,24 @@
         <div class="mt-5">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
-                    <li class="page-item {{ ($kategori->currentPage() == 1) ? 'disabled' : '' }} prev">
+                    <li class="page-item {{ $kategori->currentPage() == 1 ? 'disabled' : '' }} prev">
                         <a class="page-link" href="{{ $kategori->previousPageUrl() }}" aria-label="Previous">
                             <i class="tf-icon bx bx-chevrons-left"></i>
                         </a>
                     </li>
                     @for ($i = 1; $i <= $kategori->lastPage(); $i++)
-                        <li class="page-item {{ ($kategori->currentPage() == $i) ? 'active' : '' }}">
+                        <li class="page-item {{ $kategori->currentPage() == $i ? 'active' : '' }}">
                             <a class="page-link" href="{{ $kategori->url($i) }}">{{ $i }}</a>
                         </li>
                     @endfor
-                    <li class="page-item {{ ($kategori->currentPage() == $kategori->lastPage()) ? 'disabled' : '' }} next">
+                    <li class="page-item {{ $kategori->currentPage() == $kategori->lastPage() ? 'disabled' : '' }} next">
                         <a class="page-link" href="{{ $kategori->nextPageUrl() }}" aria-label="Next">
                             <i class="tf-icon bx bx-chevrons-right"></i>
                         </a>
                     </li>
                 </ul>
-                <span>Total data {{ $total[0]->totalData }}, halaman {{ $kategori->currentPage() }} dari {{ $kategori->lastPage() }}</span>
+                <span>Total data {{ $total[0]->totalData }}, halaman {{ $kategori->currentPage() }} dari
+                    {{ $kategori->lastPage() }}</span>
             </nav>
         </div>
     </div>
