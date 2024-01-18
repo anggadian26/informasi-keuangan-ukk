@@ -26,7 +26,9 @@ Route::middleware(['auth'])->group(function () {
         return view('welcome');
     })->name('welcome');
 
+    // produk
     Route::get('/product', [ProdukController::class, 'index'])->name('index.produk');
+    Route::get('/add-product', [ProdukController::class, 'addProductPage'])->name('editPage.product');
 
     // sub kategori produk
     Route::get('/sub-ctgr-product', [SubCtgrProductController::class, 'showData'])->name('index.subCtgrProduct');

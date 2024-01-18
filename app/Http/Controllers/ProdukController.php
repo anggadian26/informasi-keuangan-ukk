@@ -10,4 +10,9 @@ class ProdukController extends Controller
     {
         return view('produk.index');
     }
+
+    public function addProductPage() 
+    {
+        return view('produk.addProduct');
+    }
 }

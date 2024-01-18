@@ -9,7 +9,7 @@
 @section('content')
     <div class="card p-3">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="#" class="btn btn-primary me-md-2 pe-3 ps-3 btn-responsive-padding">Tambah
+            <a href="{{ route('editPage.product') }}" class="btn btn-primary me-md-2 pe-3 ps-3 btn-responsive-padding">Tambah
                 Data</a>
         </div>
         <form action="#" method="get" class="mb-3">
