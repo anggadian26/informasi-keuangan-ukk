@@ -41,8 +41,8 @@
                 </div>
             </div>
         </form> 
-        <div class="table-responsive text-nowrap mt-4">
-            <table class="table table-striped table-hover">
+        <div class="table-responsive text-nowrap">
+            <table class="table">
                 <thead>
                     <tr>
                         <th><strong>Aksi</strong></th>

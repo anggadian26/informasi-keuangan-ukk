@@ -1,29 +1,27 @@
 @extends('app')
 @section('head')
-    add produk
+    edit product
 @endsection
 @section('title1')
     Data Produk /
 @endsection
 @section('title2')
-    Tambah Produk
+    Ubah Produk
 @endsection
 
 @section('content')
 <div class="card p-3">
     <div class="container-view">
-        
-        <form action="{{ route('addAction.product') }}" method="post">
+        <form action="{{ route('editAction.product', ['id' => $product->product_id]) }}" method="post">
             @csrf
             <div class="row justify-content-start mb-3">
                 <label class="col-sm-2 col-form-label text-start" for="basic-default-name">Sub Kategori Produk</label>
                 <div class="col-sm-6">
                     <select name="sub_ctgr_product_id" class="form-select @error('sub_ctgr_product_id') is-invalid @enderror"
                         id="exampleFormControlSelect1" aria-label="Default select example">
-                        <option value=""></option>
                         @foreach ($subCtgr as $i)
                             <option value="{{ $i->sub_ctgr_product_id }}"
-                                {{ old('sub_ctgr_product_id') == $i->sub_ctgr_product_id ? 'selected' : '' }}>{{ $i->sub_ctgr_product_name }}
+                                {{ (old('sub_ctgr_product_id') ?? $product->sub_ctgr_product_id) == $i->sub_ctgr_product_id ? 'selected' : '' }}>{{ $i->sub_ctgr_product_name }}
                             </option>
                         @endforeach
                     </select>
@@ -38,7 +36,7 @@
                 <label class="col-sm-2 col-form-label text-start" for="basic-default-name">Kode Produk</label>
                 <div class="col-sm-6">
                     <input type="text" name="product_code" class="form-control @error('product_code') is-invalid @enderror" style="text-transform: uppercase"
-                        id="basic-default-name" value="{{ old('product_code') }}">
+                        id="basic-default-name" value="{{ old('product_code', $product->product_code) }}" readonly>
                     @error('product_code')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -50,7 +48,7 @@
                 <label class="col-sm-2 col-form-label text-start" for="basic-default-name">Nama Produk</label>
                 <div class="col-sm-6">
                     <input type="text" name="product_name" class="form-control @error('product_name') is-invalid @enderror"
-                        id="basic-default-name" value="{{ old('product_name') }}">
+                        id="basic-default-name" value="{{ old('product_name', $product->product_name) }}">
                     @error('product_name')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -61,15 +59,30 @@
             <div class="row justify-content-start">
                 <label class="col-sm-2 col-form-label text-start" for="basic-default-name">Harga Produk</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="nominalInput"
+                    <input type="text" class="form-control" id="nominalInput" value="{{ old('product_price', $product->product_price) }}"
                         aria-describedby="defaultFormControlHelp" oninput="formatNominal(this)" name="hiden" />
                 </div>
                 <input type="hidden" id="hiddenNominalInput" name="product_price" />
             </div>
-            <div class="row justify-content-start mb-5">
+            <div class="row justify-content-start mb-2">
                 <small class="col-sm-6 text-end">Jika belum diketahui harga produknya bisa dikosongin atau diisi 0</small>
-            </div>  
+            </div>
             <div class="row justify-content-start mb-3">
+                <label class="col-sm-2 col-form-label text-start" for="basic-default-name">Status</label>
+                <div class="col-sm-6">
+                    <select name="status" class="form-select @error('status') is-invalid @enderror"
+                                id="basic-default-name">
+                                <option value="Y" {{ $product->status == 'Y' ? 'selected' : '' }}>Aktif</option>
+                                <option value="N" {{ $product->status == 'N' ? 'selected' : '' }}>Tidak Aktif</option>
+                            </select>
+                    @error('status')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+            </div>  
+            <div class="row justify-content-start mb-3 mt-5">
                 <div class="col-sm-6 offset-sm-6">
                     {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
                     <a href="{{ route('index.produk') }}" class="btn btn-outline-secondary me-2">Batal</a>

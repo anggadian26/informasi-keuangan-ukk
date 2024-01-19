@@ -30,7 +30,7 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pages</span>
         </li>
-        <li class="menu-item {{ request()->routeIs('index.produk') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->routeIs('index.produk', 'addPage.product') ? 'active' : '' }}">
             <a href="{{ route('index.produk') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
                 <div data-i18n="Analytics">Produk</div>

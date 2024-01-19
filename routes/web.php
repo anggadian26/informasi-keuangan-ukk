@@ -27,8 +27,12 @@ Route::middleware(['auth'])->group(function () {
     })->name('welcome');
 
     // produk
-    Route::get('/product', [ProdukController::class, 'index'])->name('index.produk');
-    Route::get('/add-product', [ProdukController::class, 'addProductPage'])->name('editPage.product');
+    Route::get('/product', [ProdukController::class, 'showData'])->name('index.produk');
+    Route::get('/add-product', [ProdukController::class, 'addProductPage'])->name('addPage.product');
+    Route::post('/add-product-action', [ProdukController::class, 'addProductAction'])->name('addAction.product');
+    Route::get('/edit-product/{id}', [ProdukController::class, 'editProductPage'])->name('editPage.product');
+    Route::post('/edit-product-action/{id}', [ProdukController::class, 'editProductAction'])->name('editAction.product');
+    Route::delete('/delete-product/{id}', [ProdukController::class, 'deleteProductAction'])->name('delete.product');
 
     // sub kategori produk
     Route::get('/sub-ctgr-product', [SubCtgrProductController::class, 'showData'])->name('index.subCtgrProduct');
