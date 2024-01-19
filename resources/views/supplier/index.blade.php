@@ -15,14 +15,14 @@
             @csrf
             <div class="row mb-3">
                 <div class="col-md-2">
-                    <label for="" class="fw-bold">Kode Produk</label>
-                    <input name="product_code" type="text" class="form-control" placeholder="Kode Produk"
-                        value="{{ isset($_GET['product_code']) ? $_GET['product_code'] : '' }}">
+                    <label for="" class="fw-bold">Nama Supplier</label>
+                    <input name="supplier_name" type="text" class="form-control" placeholder="Kode Produk"
+                        value="{{ isset($_GET['supplier_name']) ? $_GET['supplier_name'] : '' }}">
                 </div>
                 <div class="col-md-2">
-                    <label for="" class="fw-bold">Nama Produk</label>
-                    <input name="product_name" type="text" class="form-control" placeholder="Nama Produk"
-                        value="{{ isset($_GET['product_name']) ? $_GET['product_name'] : '' }}">
+                    <label for="" class="fw-bold">Perusahaan</label>
+                    <input name="supplier_company" type="text" class="form-control" placeholder="Nama Produk"
+                        value="{{ isset($_GET['supplier_company']) ? $_GET['supplier_company'] : '' }}">
                 </div>
                 <div class="col-md-2">
                     <label for="" class="fw-bold">Status</label>
@@ -48,19 +48,17 @@
                         <th><strong>No. Tlpn</strong></th>
                         <th><strong>Email</strong></th>
                         <th><strong>Perusahaan</strong></th>
-                        <th><strong>No. Tlpn Perusahaan</strong></th>
                         <th><strong>Status</strong></th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    {{-- @if (count($product) < 1)
+                    @if (count($supplier) < 1)
                         <tr>
                             <td colspan="8" style="padding: 20px; font-size: 20px;"><span>No data found</span> </td>
                         </tr>
                     @else
-                        @foreach ($product as $i)
-                            @include('produk.modal.modalDetailProduct')
-                            @include('produk.modal.modalDelProduct')
+                        @foreach ($supplier as $i )
+                            @include('supplier.modal.modalDetailSuppllier')
                             <tr>
                                 <td>
                                     <div class="dropdown">
@@ -70,24 +68,20 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#detailProduct{{ $i->product_id }}"><i
+                                                data-bs-target="#detailSupplier{{ $i->supplier_id }}"><i
                                                     class="bx bx-detail me-1"></i>
                                                 Detail</a>
                                             <a class="dropdown-item"
-                                                href="{{ route('editPage.product', ['id' => $i->product_id]) }}"><i
+                                                href="{{ route('editPage.supplier', ['id' => $i->supplier_id]) }}"><i
                                                     class="bx bx-edit-alt me-1"></i>
                                                 Edit</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#delProduct{{ $i->product_id }}"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
                                         </div>
+                                    </div>
                                 </td>
-                                <td>{{ $i->product_code }}</td>
-                                <td>{{ $i->product_name }}</td>
-                                <td>{{ $i->ctgr_product_name }}</td>
-                                <td>{{ $i->sub_ctgr_product_name }}</td>
-                                <td>Rp. {{ number_format($i->product_price, 0, ',', '.') }}</td>
+                                <td>{{ $i->supplier_name }}</td>
+                                <td>{{ $i->phone_number_person }}</td>
+                                <td>{{ $i->email_person }}</td>
+                                <td>{{ $i->supplier_company }}</td>
                                 <td>
                                     @if ($i->status == 'Y')
                                         <span class="badge rounded-pill bg-success">Aktif</span>
@@ -97,33 +91,32 @@
                                 </td>
                             </tr>
                         @endforeach
-                    @endif --}}
-
+                    @endif
                 </tbody>
             </table>
         </div>
         <div class="mt-5">
-            {{-- <nav aria-label="Page navigation">
+            <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
-                    <li class="page-item {{ $product->currentPage() == 1 ? 'disabled' : '' }} prev">
-                        <a class="page-link" href="{{ $product->previousPageUrl() }}" aria-label="Previous">
+                    <li class="page-item {{ $supplier->currentPage() == 1 ? 'disabled' : '' }} prev">
+                        <a class="page-link" href="{{ $supplier->previousPageUrl() }}" aria-label="Previous">
                             <i class="tf-icon bx bx-chevrons-left"></i>
                         </a>
                     </li>
-                    @for ($i = 1; $i <= $product->lastPage(); $i++)
-                        <li class="page-item {{ $product->currentPage() == $i ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $product->url($i) }}">{{ $i }}</a>
+                    @for ($i = 1; $i <= $supplier->lastPage(); $i++)
+                        <li class="page-item {{ $supplier->currentPage() == $i ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $supplier->url($i) }}">{{ $i }}</a>
                         </li>
                     @endfor
-                    <li class="page-item {{ $product->currentPage() == $product->lastPage() ? 'disabled' : '' }} next">
-                        <a class="page-link" href="{{ $product->nextPageUrl() }}" aria-label="Next">
+                    <li class="page-item {{ $supplier->currentPage() == $supplier->lastPage() ? 'disabled' : '' }} next">
+                        <a class="page-link" href="{{ $supplier->nextPageUrl() }}" aria-label="Next">
                             <i class="tf-icon bx bx-chevrons-right"></i>
                         </a>
                     </li>
                 </ul>
-                <span>Total data {{ $total[0]->totalData }}, halaman {{ $product->currentPage() }} dari
-                    {{ $product->lastPage() }}</span>
-            </nav> --}}
+                <span>Total data {{ $total[0]->totalData }}, halaman {{ $supplier->currentPage() }} dari
+                    {{ $supplier->lastPage() }}</span>
+            </nav>
         </div>
     </div>
 @endsection

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('supplier', function (Blueprint $table) {
             $table->id('supplier_id');
             $table->string('supplier_name');
-            $table->integer('phone_number_person');
+            $table->string('phone_number_person');
             $table->string('email_person');
             $table->string('supplier_company');
-            $table->integer('phone_number_company');
+            $table->string('phone_number_company');
             $table->string('address_company');
             $table->enum('status', ['Y', 'N']);
             $table->timestamps();

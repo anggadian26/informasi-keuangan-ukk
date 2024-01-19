@@ -54,5 +54,8 @@ Route::middleware(['auth'])->group(function () {
     // supplier
     Route::get('/supplier', [SupplierController::class, 'showData'])->name('index.supplier');
     Route::get('/add-supplier', [SupplierController::class, 'addSupplierPage'])->name('addPage.supplier');
+    Route::post('/add-supplier-action', [SupplierController::class, 'addSupplierAction'])->name('addAction.supplier');
+    Route::get('/edit-supplier/{id}', [SupplierController::class, 'editSupplierPage'])->name('editPage.supplier');
+    ROute::post('/edit-supplier-action/{id}', [SupplierController::class, 'editSupplierAction'])->name('editAction.supplier');
 });
 

@@ -58,7 +58,7 @@
                 <div data-i18n="Analytics">Kategori Produk</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->routeIs('index.supplier', 'addPage.supplier') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->routeIs('index.supplier', 'addPage.supplier', 'editPage.supplier') ? 'active' : '' }}">
             <a href="{{ route('index.supplier') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-truck"></i>
                 <div data-i18n="Analytics">Supplier</div>
