@@ -3,7 +3,9 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\StokController;
 use App\Http\Controllers\SubCtgrProductController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +28,9 @@ Route::middleware(['auth'])->group(function () {
         return view('welcome');
     })->name('welcome');
 
+    // stok
+    Route::get('/stok', [StokController::class, 'showData'])->name('index.stok');
+
     // produk
     Route::get('/product', [ProdukController::class, 'showData'])->name('index.produk');
     Route::get('/add-product', [ProdukController::class, 'addProductPage'])->name('addPage.product');
@@ -45,5 +50,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-ctgr-product', [CtgrProdukController::class, 'store'])->name('store.ctgrProduct');
     Route::post('/edit-ctgr-product/{id}', [CtgrProdukController::class, 'updateDataCtgr'])->name('edit.ctgrProduct');
     Route::delete('/delete-ctgr-product/{id}', [CtgrProdukController::class, 'deleteDataCtgr'])->name('delete.ctgrProduct');
+
+    // supplier
+    Route::get('/supplier', [SupplierController::class, 'showData'])->name('index.supplier');
+    Route::get('/add-supplier', [SupplierController::class, 'addSupplierPage'])->name('addPage.supplier');
 });
 

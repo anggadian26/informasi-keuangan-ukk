@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductModel;
+use App\Models\StokModel;
 use App\Models\SubCtgrProductModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -34,11 +36,12 @@ class ProdukController extends Controller
         $status = $request->status;
 
         $query = ProductModel::query()
-            ->select('A.*', 'B.ctgr_product_id', 'B.sub_ctgr_product_name', 'C.ctgr_product_name', 'D.name')
+            ->select('A.*', 'B.ctgr_product_id', 'B.sub_ctgr_product_name', 'C.ctgr_product_name', 'D.name', 'E.total_stok')
             ->from('product AS A')
             ->join('sub_ctgr_product AS B', 'A.sub_ctgr_product_id', '=', 'B.sub_ctgr_product_id')
             ->join('ctgr_product AS C', 'B.ctgr_product_id', '=', 'C.ctgr_product_id')
             ->join('users AS D', 'A.record_id', '=', 'D.id')
+            ->join('stok AS E', 'A.product_id', '=', 'E.product_id')
             ->when($product_code, function($query, $product_code) {
                 return $query->where('A.product_code', 'like', '%' .$product_code. '%');
             })
@@ -108,7 +111,15 @@ class ProdukController extends Controller
             'record_id'             => $user_id
         ];
 
-        ProductModel::create($data);
+        $product = ProductModel::create($data);
+
+        $stokData = [
+            'product_id'        => $product->product_id,
+            'total_stok'        => 0,
+            'update_stok_date'  => Carbon::now()->toDateString()
+        ];
+
+        StokModel::create($stokData);
 
         return redirect()->route('index.produk')->with('toast_success', 'Data Produk berhasil ditambahkan!');
     }
@@ -151,7 +162,17 @@ class ProdukController extends Controller
 
     public function deleteProductAction($id) 
     {
-        ProductModel::find($id)->delete();
+        $product = ProductModel::find($id);
+        
+        if($product){
+            $stok = StokModel::where('product_id', $product->product_id)->first();
+
+            if($stok) {
+                $stok->delete();
+            }
+
+            $product->delete();
+        }
         return redirect()->route('index.produk')->with('toast_success', 'Data Produk berhasil dihapus!');
     }
 }

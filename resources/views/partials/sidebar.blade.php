@@ -28,9 +28,19 @@
         </li>
 
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Pages</span>
+            <span class="menu-header-text">Transaksi</span>
         </li>
-        <li class="menu-item {{ request()->routeIs('index.produk', 'addPage.product') ? 'active' : '' }}">
+
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Master</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.stok') ? 'active' : '' }}">
+            <a href="{{ route('index.stok') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Analytics">Stok</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.produk', 'addPage.product', 'editPage.product') ? 'active' : '' }}">
             <a href="{{ route('index.produk') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
                 <div data-i18n="Analytics">Produk</div>
@@ -46,6 +56,12 @@
             <a href="{{ route('index.ctgrProduct') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
                 <div data-i18n="Analytics">Kategori Produk</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.supplier', 'addPage.supplier') ? 'active' : '' }}">
+            <a href="{{ route('index.supplier') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-truck"></i>
+                <div data-i18n="Analytics">Supplier</div>
             </a>
         </li>
     </ul>
