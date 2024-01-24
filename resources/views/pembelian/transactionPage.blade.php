@@ -11,6 +11,9 @@
 
 @section('content')
     <div class="card p-3">
+        <div class="">
+            <a href="{{ route('backTransaction.pembelian', ['id' => $pembelian_id]) }}" class="btn btn-primary pt-1 pb-1 mb-3"><span class="tf-icons bx bx-left-arrow-alt fw-bold"></span> Kembali</a>
+        </div>
         <div class="row">
             <div class="col-md-5">
                 <p class="mb-1"><span class="fw-bold">Nama Supplier :</span> {{ $supplier->supplier_name }}</p>
@@ -21,8 +24,8 @@
         </div>
 
         <div class="row justify-content-end mb-5">
-            <div class="col-sm-2">
-                <button class="btn-lg btn-success" data-bs-toggle="modal"
+            <div class="col-sm-3 text-end">
+                <button class="btn-lg btn-success ps-5 pe-5" data-bs-toggle="modal"
                 data-bs-target="#pilihProduk">Pilih Produk</button>
               
             </div>

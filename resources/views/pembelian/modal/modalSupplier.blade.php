@@ -57,7 +57,7 @@
                                             <td>{{ $i->phone_number_person }}</td>
                                             <td>{{ $i->email_person }}</td>
                                             <td>
-                                                <a href="{{ route('transaction.pembelian', ['id' => $i->supplier_id]) }}" class="btn btn-primary ps-2 pe-2 pt-1 pb-1">
+                                                <a href="{{ route('transactionCreate.pembelian', ['id' => $i->supplier_id]) }}" class="btn btn-primary ps-2 pe-2 pt-1 pb-1">
                                                     <span class="tf-icons bx bx-check-circle"></span>Pilih
                                                 </a>
                                             </td>

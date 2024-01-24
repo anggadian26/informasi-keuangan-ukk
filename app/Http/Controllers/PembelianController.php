@@ -26,18 +26,26 @@ class PembelianController extends Controller
         return response()->json(['supplier' => $supplier]);
     }
 
-    public function transactionPage($id)
+    public function createTransaction($id)
     {
-        $supplier = SupplierModel::find($id);
 
-        $queryProduk = "
-            SELECT A.*, B.total_stok
-            FROM product A
-            INNER JOIN stok B ON A.product_id = B.product_id
-            ORDER BY A.product_code, A.product_name
-        ";
-        $product = DB::select($queryProduk);
+        $pembelian = new PembelianModel();
+        $pembelian->supplier_id = $id;
+        $pembelian->tanggal_pembelian = Carbon::now()->toDateString();
+        $pembelian->jenis_pembelian = 'cash';
+        $pembelian->total_item = 0;
+        $pembelian->total_harga = 0;
+        $pembelian->diskon = 0;
+        $pembelian->total_bayar = 0;
+        $pembelian->status_pembayaran = 'L';
+        $pembelian->catatan = '';
+        $pembelian->save();
 
-        return view('pembelian.transactionPage', compact('supplier', 'product'));
+        request()->session()->put('pembelian_id', $pembelian->pembelian_id);
+        request()->session()->put('supplier_id', $id);
+
+        return redirect()->route('transactionPage.pembelian');
+        
     }
+
 }
