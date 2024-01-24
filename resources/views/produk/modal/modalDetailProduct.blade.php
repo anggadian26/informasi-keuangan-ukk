@@ -25,6 +25,13 @@
                         </div>
                     </div>
                     <div class="row justify-content-start mb-3">
+                        <label class="col-sm-3 col-form-label text-start" for="basic-default-name">Merek</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="basic-default-name"
+                                value="{{ $i->merek }}" readonly>
+                        </div>
+                    </div>
+                    <div class="row justify-content-start mb-3">
                         <label class="col-sm-3 col-form-label text-start" for="basic-default-name">Sub Kategori Produk</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="basic-default-name"
@@ -39,7 +46,14 @@
                         </div>
                     </div>
                     <div class="row justify-content-start mb-3">
-                        <label class="col-sm-3 col-form-label text-start" for="basic-default-name">Harga Produk</label>
+                        <label class="col-sm-3 col-form-label text-start" for="basic-default-name">Harga Beli</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="basic-default-name"
+                                value="Rp. {{ number_format($i->product_purcase, 0, ',', '.') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="row justify-content-start mb-3">
+                        <label class="col-sm-3 col-form-label text-start" for="basic-default-name">Harga Jual</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="basic-default-name"
                                 value="Rp. {{ number_format($i->product_price, 0, ',', '.') }}" readonly>

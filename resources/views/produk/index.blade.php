@@ -62,9 +62,9 @@
                         <th><strong>Aksi</strong></th>
                         <th><strong>Kode</strong></th>
                         <th><strong>Nama</strong></th>
+                        <th><strong>Merek</strong></th>
                         <th><strong>Kategori</strong></th>
                         <th><strong>Sub Kategori</strong></th>
-                        <th><strong>Harga Produk</strong></th>
                         <th><strong>Status</strong></th>
                     </tr>
                 </thead>
@@ -99,9 +99,9 @@
                                 </td>
                                 <td>{{ $i->product_code }}</td>
                                 <td>{{ $i->product_name }}</td>
+                                <td>{{ $i->merek }}</td>
                                 <td>{{ $i->ctgr_product_name }}</td>
                                 <td>{{ $i->sub_ctgr_product_name }}</td>
-                                <td>Rp. {{ number_format($i->product_price, 0, ',', '.') }}</td>
                                 <td>
                                     @if ($i->status == 'Y')
                                         <span class="badge rounded-pill bg-success">Aktif</span>

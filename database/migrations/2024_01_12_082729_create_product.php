@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('sub_ctgr_product_id');
             $table->string('product_code');
             $table->string('product_name');
+            $table->string('merek');
+            $table->decimal('product_purcase', 20, 0);
             $table->decimal('product_price', 20, 0);
             $table->enum('status', ['Y', 'N']);
             $table->foreignId('record_id');

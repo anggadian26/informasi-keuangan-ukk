@@ -25,7 +25,7 @@ class ProdukController extends Controller
         $querySubCtgr = "
             SELECT *
             FROM sub_ctgr_product
-            WHERE status = 'y'
+            WHERE status = 'Y'
         ";
         $sub_ctgr_product = DB::select($querySubCtgr);
 
@@ -90,13 +90,11 @@ class ProdukController extends Controller
             'sub_ctgr_product_id'   => 'required',
             'product_code'          => 'required',
             'product_name'          => 'required',
+            'merek'                 => 'required',
+            'product_purcase'       => 'required',
+            'product_price'         => 'required',
         ]);
 
-        if($request->product_price == null || $request->product_price == 0) {
-            $product_price = 0;
-        } else {
-            $product_price = $request->product_price;
-        }
 
         $product_code = strtoupper($val['product_code']);
         $product_name = $val['product_name'];
@@ -106,7 +104,9 @@ class ProdukController extends Controller
             'sub_ctgr_product_id'   => $val['sub_ctgr_product_id'],
             'product_code'          => $product_code,
             'product_name'          => $product_name,
-            'product_price'         => $product_price,
+            'merek'                 => $val['merek'],
+            'product_purcase'       => $val['product_purcase'],
+            'product_price'         => $val['product_price'],
             'status'                => 'Y',
             'record_id'             => $user_id
         ];
