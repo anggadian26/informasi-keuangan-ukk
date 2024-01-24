@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\CtgrProdukController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SubCtgrProductController;
@@ -28,6 +29,13 @@ Route::middleware(['auth'])->group(function () {
         return view('welcome');
     })->name('welcome');
 
+    /* -- TRANSAKSI -- */
+    // pembelian
+    Route::get('/pembelian-data', [PembelianController::class, 'showData'])->name('index.pembelian');
+    Route::get('/search-supplier', [PembelianController::class, 'searchSupplier']);
+    Route::get('/transaksi-pembelian-page/{id}/create', [PembelianController::class, 'transactionPage'])->name('transaction.pembelian');
+
+    /* -- MASTER -- */ 
     // stok
     Route::get('/stok', [StokController::class, 'showData'])->name('index.stok');
 

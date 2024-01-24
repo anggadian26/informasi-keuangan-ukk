@@ -27,10 +27,18 @@
             </a>
         </li>
 
+        {{-- Transaksi --}}
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Transaksi</span>
         </li>
+        <li class="menu-item {{ request()->routeIs('index.pembelian', 'transaction.pembelian') ? 'active' : '' }}">
+            <a href="{{ route('index.pembelian') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-down-arrow-alt text-danger"></i>
+                <div data-i18n="Analytics">Pembelian</div>
+            </a>
+        </li>
 
+        {{-- Master --}}
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Master</span>
         </li>
