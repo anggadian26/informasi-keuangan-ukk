@@ -137,14 +137,11 @@ class ProdukController extends Controller
         $val = $request->validate([
             'sub_ctgr_product_id'   => 'required',
             'product_name'          => 'required',
+            'merek'                 => 'required',
+            'product_purcase'       => 'required',
+            'product_price'         => 'required',
             'status'                => 'required'
         ]);
-
-        if($request->product_price == null || $request->product_price == 0) {
-            $product_price = 0;
-        } else {
-            $product_price = $request->product_price;
-        }
 
         $product = ProductModel::find($id);
         $user_id = Auth::user()->id;
@@ -152,7 +149,9 @@ class ProdukController extends Controller
         $product->update([
             'sub_ctgr_product_id'   => $request->sub_ctgr_product_id,
             'product_name'          => $request->product_name,
-            'product_price'         => $product_price,
+            'merek'                 => $val['merek'],
+            'product_purcase'       => $val['product_purcase'],
+            'product_price'         => $val['product_price'],
             'status'                => $request->status,
             'record_id'             => $user_id
         ]);
