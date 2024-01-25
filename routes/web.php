@@ -37,6 +37,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaksi-pembelian-page/{id}/create', [PembelianController::class, 'createTransaction'])->name('transactionCreate.pembelian');
     Route::get('/transaksi-pembelian-page', [DetailPembelianController::class, 'transactionPage'])->name('transactionPage.pembelian');
     Route::get('/transaction-back/{id}', [DetailPembelianController::class, 'backTransactionPage'])->name('backTransaction.pembelian');
+    Route::get('/search-product-transaction', [DetailPembelianController::class, 'searchProduct']);
+    Route::post('/store-detail-pembelian', [DetailPembelianController::class, 'storePembelianProduct'])->name('storePembelianProduct.pembelian');
+    Route::get('/pembelian-datail-produk/{id}/data', [DetailPembelianController::class, 'data'])->name('detailProduct.pembelian');
 
     /* -- MASTER -- */ 
     // stok

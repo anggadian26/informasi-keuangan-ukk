@@ -11,4 +11,8 @@ class DetailPembelianModel extends Model
     protected $primaryKey = 'detail_pembelian_id';
 
     protected $guarded = [];
+
+    public function produk() {
+        return $this->hasOne(ProductModel::class, 'product_id', 'product_id');
+    }
 }
