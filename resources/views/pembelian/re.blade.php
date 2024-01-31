@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
-    data-assets-path="../assets/" data-template="vertical-menu-template-free">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
-    <title>komobox | transaksi</title>
-
-    <meta name="description" content="" />
-
-    @include('link-asset.head')
+@extends('app')
+@section('head')
+    TransaksiPembelianAction
+@endsection
+@section('title1')
+    Transaksi Pembelian /
+@endsection
+@section('title2')
+    Aksi Transaksi
+@endsection
+@section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .tampil-bayar {
@@ -37,167 +34,125 @@
             }
         }
     </style>
-</head>
+@endsection
 
-<body>
-    @include('sweetalert::alert')
+@section('content')
+    <div class="card p-3">
+        <div class="">
+            <a href="{{ route('backTransaction.pembelian', ['id' => $pembelian_id]) }}"
+                class="btn btn-primary pt-1 pb-1 mb-3"
+                onclick="return confirm('Apakah Anda yakin ingin keluar dari transaksi?')">
+                <span class="tf-icons bx bx-left-arrow-alt fw-bold"></span> Kembali
+            </a>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5">
+                <table>
+                    <tr>
+                        <td>Nama Supplier</td>
+                        <td class="fw-bold">: {{ $supplier->supplier_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Telepon Supplier</td>
+                        <td class="fw-bold">: {{ $supplier->phone_number_person }}</td>
+                    </tr>
+                    <tr>
+                        <td>Perusahaan Supplier</td>
+                        <td class="fw-bold">: {{ $supplier->supplier_company }}</td>
+                    </tr>
+                    <tr>
+                        <td>Alamat Perusahaan</td>
+                        <td class="fw-bold">: {{ $supplier->address_company }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar layout-without-menu">
-        <div class="layout-container">
+        <div class="row justify-content-end mb-5">
+            <div class="col-sm-3 text-end">
+                <form class="form-produk">
+                    @csrf
+                    <input type="hidden" name="product_id" id="product_id">
+                    <input type="hidden" name="product_code" id="product_code">
+                    <input type="hidden" name="pembelian_id" id="pembelian_id" value="{{ $pembelian_id }}">
+                    <button class="btn-lg btn-success ps-5 pe-5 fw-bold" data-bs-toggle="modal"
+                        data-bs-target="#pilihProduk">Pilih Produk</button>
+                </form>
+            </div>
+        </div>
+        @include('pembelian.modal.modalPilihProduk')
+        @include('pembelian.modal.modalInfo')
+        <div class="table-responsive text-nowrap">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="3%"><strong>No</strong></th>
+                        <th><strong>Kode Produk</strong></th>
+                        <th ><strong>Nama Produk</strong></th>
+                        <th width=15%>
+                            <strong>Harga Jual</strong>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#infoHargaJual" class="btn-xs rounded-pill btn-icon btn-primary">
+                                <span class="tf-icons bx bx-info-circle"></span>
+                              </button>
+                        </th>
+                        <th width=15%>
+                            <strong>Harga Beli</strong>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#infoHargaBeli" class="btn-xs rounded-pill btn-icon btn-primary">
+                                <span class="tf-icons bx bx-info-circle"></span>
+                              </button>
+                        </th>
+                        <th width="12%"><strong>Jumlah</strong></th>
+                        <th width="17%"><strong>Sub Total</strong></th>
+                        <th><strong>Aksi</strong></th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0" id="detailTableBody">
 
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="row mt-5">
+            <div class="col-lg-8">
+                <div class="tampil-bayar bg-primary text-white"></div>
+                <div class="tampil-terbilang"></div>
+            </div>
+            <div class="col-lg-4">
+                <form action="#" class="form-penjualan" method="post">
+                    @csrf
+                    
 
-            {{-- contentdisini --}}
-            <div class="layout-page">
-                <!-- Navbar -->
-                @include('partials.navbar')
-                <!-- / Navbar -->
-
-                <!-- Content wrapper -->
-                <div class="content-wrapper">
-                    <!-- Content -->
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="card p-3">
-                            <div class="">
-                                <a href="{{ route('backTransaction.pembelian', ['id' => $pembelian_id]) }}"
-                                    class="btn btn-primary pt-1 pb-1 mb-3"
-                                    onclick="return confirm('Apakah Anda yakin ingin keluar dari transaksi?')">
-                                    <span class="tf-icons bx bx-left-arrow-alt fw-bold"></span> Kembali
-                                </a>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <table>
-                                        <tr>
-                                            <td>Nama Supplier</td>
-                                            <td class="fw-bold">: {{ $supplier->supplier_name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Telepon Supplier</td>
-                                            <td class="fw-bold">: {{ $supplier->phone_number_person }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Perusahaan Supplier</td>
-                                            <td class="fw-bold">: {{ $supplier->supplier_company }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Alamat Perusahaan</td>
-                                            <td class="fw-bold">: {{ $supplier->address_company }}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="row justify-content-end mb-5">
-                                <div class="col-sm-3 text-end">
-                                    <form class="form-produk">
-                                        @csrf
-                                        <input type="hidden" name="product_id" id="product_id">
-                                        <input type="hidden" name="product_code" id="product_code">
-                                        <input type="hidden" name="pembelian_id" id="pembelian_id"
-                                            value="{{ $pembelian_id }}">
-                                        <button class="btn-lg btn-success ps-5 pe-5 fw-bold" data-bs-toggle="modal"
-                                            data-bs-target="#pilihProduk">Pilih Produk</button>
-                                    </form>
-                                </div>
-                            </div>
-                            @include('pembelian.modal.modalPilihProduk')
-                            @include('pembelian.modal.modalInfo')
-                            <div class="table-responsive text-nowrap">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th width="3%"><strong>No</strong></th>
-                                            <th><strong>Kode Produk</strong></th>
-                                            <th><strong>Nama Produk</strong></th>
-                                            <th width=15%>
-                                                <strong>Harga Jual</strong>
-                                                <button type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#infoHargaJual"
-                                                    class="btn-xs rounded-pill btn-icon btn-primary">
-                                                    <span class="tf-icons bx bx-info-circle"></span>
-                                                </button>
-                                            </th>
-                                            <th width=15%>
-                                                <strong>Harga Beli</strong>
-                                                <button type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#infoHargaBeli"
-                                                    class="btn-xs rounded-pill btn-icon btn-primary">
-                                                    <span class="tf-icons bx bx-info-circle"></span>
-                                                </button>
-                                            </th>
-                                            <th width="12%"><strong>Jumlah</strong></th>
-                                            <th width="17%"><strong>Sub Total</strong></th>
-                                            <th><strong>Aksi</strong></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-border-bottom-0" id="detailTableBody">
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-lg-8">
-                                    <div class="tampil-bayar bg-primary text-white"></div>
-                                    <div class="tampil-terbilang"></div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <form action="#" class="form-penjualan" method="post">
-                                        @csrf
-                                        <input type="hidden" name="pembelian_id" value="{{ $pembelian_id }}">
-                                        <input type="hidden" name="total_harga" id="totalInputan">
-                                        <input type="hidden" name="total_item" id="total_item">
-                                        <input type="hidden" name="dison" id="diskonInputan">
-                                        <input type="hidden" name="total_bayar" id="bayar">
-
-                                        <div class="form-group row mb-2">
-                                            <label for="totalrp" class="col-lg-4 control-label">Total</label>
-                                            <div class="col-lg-8">
-                                                <input type="text" id="totalrp" class="form-control" readonly>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row mb-2">
-                                            <label for="diskon" class="col-lg-4 control-label">Diskon (%)</label>
-                                            <div class="col-lg-8">
-                                                <input type="number" name="diskon" id="diskon" value="0"
-                                                    class="form-control" onchange="updateBayar()">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row mb-2">
-                                            <label for="bayar" class="col-lg-4 control-label">Bayar</label>
-                                            <div class="col-lg-8">
-                                                <input type="text" id="bayarrp" class="form-control" readonly>
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="text-end">
-                                <button class="btn-lg btn-primary"><span class="tf-icons bx bxs-save"></span> Simpan
-                                    Transaksi</button>
-                            </div>
+                    <div class="form-group row mb-2">
+                        <label for="totalrp" class="col-lg-4 control-label">Total</label>
+                        <div class="col-lg-8">
+                            <input type="text" id="totalrp" class="form-control" readonly>
                         </div>
                     </div>
-                    <!-- / Content -->
-
-                    <!-- Footer -->
-                    @include('partials.footer')
-                    <!-- / Footer -->
-
-                    <div class="content-backdrop fade"></div>
-                </div>
+                    
+                    <div class="form-group row mb-2">
+                        <label for="diskon" class="col-lg-4 control-label">Diskon (%)</label>
+                        <div class="col-lg-8">
+                            <input type="number" name="diskon" id="diskon"  value="0" class="form-control" onchange="updateBayar()">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row mb-2">
+                        <label for="bayar" class="col-lg-4 control-label">Bayar</label>
+                        <div class="col-lg-8">
+                            <input type="text" id="bayarrp" class="form-control" readonly>
+                        </div>
+                    </div>
+                   
+                </form>
             </div>
-
+        </div>
+        <hr>
+        <div class="text-end">
+            <button class="btn-lg btn-primary"><span class="tf-icons bx bxs-save"></span> Simpan Transaksi</button>
         </div>
     </div>
 
-    @include('link-asset.script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         let table;
@@ -339,6 +294,7 @@
             });
 
             $('#totalrp').val('Rp ' +total.toLocaleString('id-ID'));
+
             updateBayar();
         }
 
@@ -347,6 +303,7 @@
             let totalString = $('#totalrp').val().replace(/\./g, ''); 
             let totalReplace = totalString.replace(/[^\d.-]/g, '');
             let totalDiskon = parseInt(totalReplace);
+            console.log(diskon);
             if (diskon < 0) {
                 $(this).val(0);
             }
@@ -362,24 +319,6 @@
             $('#bayarrp').val('Rp ' + bayar.toLocaleString('id-ID'));
             $('.tampil-bayar').text('Rp ' + bayar.toLocaleString('id-ID'));
             $('.tampil-terbilang').text(terbilang(bayar) + ' Rupiah');
-
-            submitForm(totalDiskon, bayar)
-        }
-
-        function submitForm(total, bayar) {
-            let totalHarga = total; 
-            console.log(totalHarga);
-            $('#totalInputan').val(totalHarga);
-          
-            let totalItem = $('#detailTableBody tr').length; // Menghitung jumlah baris di dalam elemen tabel
-            // Menetapkan nilai total item ke input dengan ID total_item
-            $('#total_item').val(totalItem);
-
-            // Mengambil nilai total bayar dari elemen dengan ID bayarrp
-            let totalBayar = bayar; // Menghapus 'Rp. ' dari nilai bayarrp
-            // Menetapkan nilai total bayar ke input dengan ID bayar
-            $('#bayar').val(totalBayar);
-
         }
 
         function terbilang(n) {
@@ -465,6 +404,4 @@
             });
         });
     </script>
-</body>
-
-</html>
+@endsection

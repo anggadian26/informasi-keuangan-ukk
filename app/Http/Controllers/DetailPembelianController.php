@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailPembelianModel;
 use App\Models\PembelianModel;
 use App\Models\ProductModel;
+use App\Models\StokModel;
 use App\Models\SupplierModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +36,7 @@ class DetailPembelianController extends Controller
     public function backTransactionPage($id)
     {
         PembelianModel::find($id)->delete();
+        DetailPembelianModel::where('pembelian_id', $id)->delete();
 
         return redirect()->route('index.pembelian');
     }
@@ -77,10 +79,46 @@ class DetailPembelianController extends Controller
     }
 
     public function data($id) 
-    {
+    {     
         $detail = DetailPembelianModel::with('produk')->where('pembelian_id', $id)->get();
-
         return response()->json(['detail' => $detail]);
+    }
+
+    function update(Request $request, $id)
+    { 
+        $detail = DetailPembelianModel::find($id);
+        if($request->harga_beli != NULL) {
+            $detail->harga_beli = $request->harga_beli;
+            $detail->sub_total = $request->harga_beli * $detail->jumlah;
+
+            $product = ProductModel::find($detail->product_id);
+            $product->product_purcase = $request->harga_beli;
+            $product->update();
+        } else {
+            $detail->jumlah = $request->jumlah;
+            $detail->sub_total = $detail->harga_beli * $request->jumlah;
+
+            
+        }
+
+        if($request->harga_jual != NULL) {
+            $detail->harga_jual = $request->harga_jual;
+
+            $product = ProductModel::find($detail->product_id);
+            $product->product_price = $request->harga_jual;
+            $product->update();
+        }
+
+        $detail->update();
+
+        return response(null, 204);
+    }
+
+    public function deleteDetailPembelian($id) 
+    {
+        $detail = DetailPembelianModel::find($id)->delete();
+
+        return response(null, 204);
     }
 
 }
