@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>komobox | transaksi</title>
+    <title>komobox | transaksi-pembelian</title>
 
     <meta name="description" content="" />
 
@@ -144,12 +144,12 @@
                                     <div class="tampil-terbilang"></div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <form action="#" class="form-penjualan" method="post">
+                                    <form action="{{ route('saveTransaction.pembelian') }}" class="form-pembelian" method="post">
                                         @csrf
                                         <input type="hidden" name="pembelian_id" value="{{ $pembelian_id }}">
                                         <input type="hidden" name="total_harga" id="totalInputan">
                                         <input type="hidden" name="total_item" id="total_item">
-                                        <input type="hidden" name="dison" id="diskonInputan">
+                                        <input type="hidden" name="diskon" id="diskonInputan">
                                         <input type="hidden" name="total_bayar" id="bayar">
 
                                         <div class="form-group row mb-2">
@@ -166,20 +166,52 @@
                                                     class="form-control" onchange="updateBayar()">
                                             </div>
                                         </div>
-
                                         <div class="form-group row mb-2">
-                                            <label for="bayar" class="col-lg-4 control-label">Bayar</label>
+                                            <label for="ppn" class="col-lg-4 control-label">PPN 11%</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" id="ppn" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label for="bayar" class="col-lg-4 control-label">Bayar + PPN</label>
                                             <div class="col-lg-8">
                                                 <input type="text" id="bayarrp" class="form-control" readonly>
                                             </div>
                                         </div>
-
+                                        <div class="form-group row mb-2">
+                                            <label for="" class="col-lg-4 control-label">Jenis Pembelian</label>
+                                            <div class="col-lg-8">
+                                                <select name="jenis_pembelian" class="form-select" id="jenis_pembelian" aria-label="Default select example">
+                                                    <option value="cash">Cash</option>
+                                                    <option value="credit">Credit</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row mb-2" id="uang_muka_input" style="display: none;">
+                                            <label for="uang_muka" class="col-lg-4 control-label">Uang Muka</label>
+                                            <div class="col-lg-8">
+                                                <input type="number" name="uang_muka" id="uang_muka" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2" id="tanggal_jatuh_tempo_input" style="display: none;">
+                                            <label for="tanggal_jatuh_tempo" class="col-lg-4 control-label">Tanggal Jatuh Tempo</label>
+                                            <div class="col-lg-8">
+                                                <input type="date" name="tanggal_jatuh_tempo" id="tanggal_jatuh_tempo" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label for="" class="col-lg-4 control-label">Catatan</label>
+                                            <div class="col-lg-8">
+                                                <textarea class="form-control" name="catatan" rows="3"></textarea>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
                             <hr>
                             <div class="text-end">
-                                <button class="btn-lg btn-primary"><span class="tf-icons bx bxs-save"></span> Simpan
+                                <button class="btn-lg btn-primary" onclick="saveTransaksi()" type="submit"><span class="tf-icons bx bxs-save"></span> Simpan
                                     Transaksi</button>
                             </div>
                         </div>
@@ -306,7 +338,7 @@
                         
                 });
 
-                $(document).on('mouseleave', '.quantity', function () {
+                $(document).on('input', '.quantity', function () {
                     
                     let id = $(this).data('id');
                     let jumlah = $(this).val();
@@ -359,60 +391,49 @@
                 bayar = totalDiskon - diskonAbsolut;
             }
 
-            $('#bayarrp').val('Rp ' + bayar.toLocaleString('id-ID'));
-            $('.tampil-bayar').text('Rp ' + bayar.toLocaleString('id-ID'));
-            $('.tampil-terbilang').text(terbilang(bayar) + ' Rupiah');
+            let ppn = (11 / 100) * bayar;
+            let resultBayar = bayar + ppn;
 
-            submitForm(totalDiskon, bayar)
+            $('#bayarrp').val('Rp ' + resultBayar.toLocaleString('id-ID'));
+
+            $('#ppn').val('Rp ' + ppn.toLocaleString('id-ID'));
+            $('.tampil-bayar').text('Rp ' + resultBayar.toLocaleString('id-ID'));
+            $('.tampil-terbilang').text(terbilang(resultBayar) + ' Rupiah');
+
+            isiForm(totalDiskon, resultBayar, diskon)
         }
 
-        function submitForm(total, bayar) {
+        function isiForm(total, resultBayar, diskon) {
             let totalHarga = total; 
             console.log(totalHarga);
             $('#totalInputan').val(totalHarga);
           
-            let totalItem = $('#detailTableBody tr').length; // Menghitung jumlah baris di dalam elemen tabel
-            // Menetapkan nilai total item ke input dengan ID total_item
+            let totalItem = $('#detailTableBody tr').length; 
+
             $('#total_item').val(totalItem);
 
-            // Mengambil nilai total bayar dari elemen dengan ID bayarrp
-            let totalBayar = bayar; // Menghapus 'Rp. ' dari nilai bayarrp
-            // Menetapkan nilai total bayar ke input dengan ID bayar
+            let totalBayar = resultBayar; 
             $('#bayar').val(totalBayar);
-
+            $('#diskonInputan').val(diskon);
         }
 
-        function terbilang(n) {
-            const bilangan = [
-                '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan'
-            ];
-            const belasan = [
-                'Sepuluh', 'Sebelas', 'Dua Belas', 'Tiga Belas', 'Empat Belas', 'Lima Belas', 'Enam Belas', 'Tujuh Belas', 'Delapan Belas', 'Sembilan Belas'
-            ];
-            const puluhan = [
-                '', 'Sepuluh', 'Dua Puluh', 'Tiga Puluh', 'Empat Puluh', 'Lima Puluh', 'Enam Puluh', 'Tujuh Puluh', 'Delapan Puluh', 'Sembilan Puluh'
-            ];
-
-            if (n < 10) {
-                return bilangan[n];
-            } else if (n >= 10 && n < 20) {
-                return belasan[n - 10];
-            } else if (n >= 20 && n < 100) {
-                return puluhan[Math.floor(n / 10)] + ' ' + bilangan[n % 10];
-            } else if (n >= 100 && n < 1000) {
-                return bilangan[Math.floor(n / 100)] + ' Ratus ' + terbilang(n % 100);
-            } else if (n >= 1000 && n < 1000000) {
-                return terbilang(Math.floor(n / 1000)) + ' Ribu ' + terbilang(n % 1000);
-            } else if (n >= 1000000 && n < 1000000000) {
-                return terbilang(Math.floor(n / 1000000)) + ' Juta ' + terbilang(n % 1000000);
-            } else if (n >= 1000000000 && n < 1000000000000) {
-                return terbilang(Math.floor(n / 1000000000)) + ' Miliar ' + terbilang(n % 1000000000);
-            } else {
-                return 'Angka terlalu besar untuk dijabarkan.';
-            }
+        function saveTransaksi() {
+            $('.form-pembelian').submit();
         }
 
+        $(document).ready(function() {
+            $('#jenis_pembelian').change(function() {
+                if ($(this).val() === 'credit') {
+                    $('#uang_muka_input').show(); 
+                    $('#tanggal_jatuh_tempo_input').show(); 
+                } else {
+                    $('#uang_muka_input').hide(); 
+                    $('#tanggal_jatuh_tempo_input').hide(); 
+                }
+            });
+        });
 
+        
 
         $(document).on('click', '.delete-item', function(e) {
             e.preventDefault();
@@ -464,6 +485,36 @@
                 event.preventDefault();
             });
         });
+
+        function terbilang(n) {
+            const bilangan = [
+                '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan'
+            ];
+            const belasan = [
+                'Sepuluh', 'Sebelas', 'Dua Belas', 'Tiga Belas', 'Empat Belas', 'Lima Belas', 'Enam Belas', 'Tujuh Belas', 'Delapan Belas', 'Sembilan Belas'
+            ];
+            const puluhan = [
+                '', 'Sepuluh', 'Dua Puluh', 'Tiga Puluh', 'Empat Puluh', 'Lima Puluh', 'Enam Puluh', 'Tujuh Puluh', 'Delapan Puluh', 'Sembilan Puluh'
+            ];
+
+            if (n < 10) {
+                return bilangan[n];
+            } else if (n >= 10 && n < 20) {
+                return belasan[n - 10];
+            } else if (n >= 20 && n < 100) {
+                return puluhan[Math.floor(n / 10)] + ' ' + bilangan[n % 10];
+            } else if (n >= 100 && n < 1000) {
+                return bilangan[Math.floor(n / 100)] + ' Ratus ' + terbilang(n % 100);
+            } else if (n >= 1000 && n < 1000000) {
+                return terbilang(Math.floor(n / 1000)) + ' Ribu ' + terbilang(n % 1000);
+            } else if (n >= 1000000 && n < 1000000000) {
+                return terbilang(Math.floor(n / 1000000)) + ' Juta ' + terbilang(n % 1000000);
+            } else if (n >= 1000000000 && n < 1000000000000) {
+                return terbilang(Math.floor(n / 1000000000)) + ' Miliar ' + terbilang(n % 1000000000);
+            } else {
+                return 'Angka terlalu besar untuk dijabarkan.';
+            }
+        }
     </script>
 </body>
 

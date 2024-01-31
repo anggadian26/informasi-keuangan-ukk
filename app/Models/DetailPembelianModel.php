@@ -15,4 +15,11 @@ class DetailPembelianModel extends Model
     public function produk() {
         return $this->hasOne(ProductModel::class, 'product_id', 'product_id');
     }
+
+    public function product()
+    {
+        return $this->belongsTo(ProductModel::class, 'product_id', 'product_id');
+    }
+
+    
 }
