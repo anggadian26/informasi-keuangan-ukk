@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('merek');
             $table->decimal('product_purcase', 20, 0);
             $table->decimal('product_price', 20, 0);
+            $table->tinyInteger('diskon')->default(0);
             $table->enum('status', ['Y', 'N']);
             $table->foreignId('record_id');
             $table->timestamps();

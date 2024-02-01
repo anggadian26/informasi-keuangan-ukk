@@ -24,19 +24,19 @@ VALUES
 (4, 'SUBCTGR008', 'PROTECTOR HP', 'Y', 1, NOW(), NOW());
 
 
-INSERT INTO product (sub_ctgr_product_id, product_code, product_name, merek, product_purcase, product_price, status, record_id, created_at, updated_at)
+INSERT INTO product (sub_ctgr_product_id, product_code, product_name, merek, product_purcase, product_price, diskon, status, record_id, created_at, updated_at)
 VALUES
-(1, 'PROD001', 'Gigabyte B60M', 'Gigabyte', 2000000, 2100000, 'Y', 1, NOW(), NOW()),
-(1, 'PROD002', 'MSI Intel Edition', 'MSI', 4300000, 4500000, 'Y', 1, NOW(), NOW()),
-(2, 'PROD003', 'Iphone 14 PRO MAX', 'Iphone', 23000000, 23200000, 'Y', 1, NOW(), NOW()),
-(3, 'PROD004', 'Lenovo LOQ 16GB', 'Lenovo', 15000000, 15999999, 'Y', 1, NOW(), NOW()),
-(3, 'PROD005', 'ASUS ROG TIMELINE', 'ASUS', 65000000, 65300000, 'Y', 1, NOW(), NOW()),
-(3, 'PROD006', 'Acer Predator By45', 'Acer', 2400000, 24300000, 'Y', 1, NOW(), NOW()),
-(4, 'PROD007', 'Powerful Case', 'Powefull', 50000, 50200, 'Y', 1, NOW(), NOW()),
-(5, 'PROD008', 'Coler Master 80+ Bronze 600 wat', 'Color Master', 3000000, 3200000, 'Y', 1, NOW(), NOW()),
-(6, 'PROD009', 'Asus ROG Phone 6', 'ASUS', 12000000, 12300000, 'Y', 1, NOW(), NOW()),
-(7, 'PROD010', 'Samsung ChromeBook Pro', 'Samsung', 200000, 2300000, 'Y', 1, NOW(), NOW()),
-(8, 'PROD011', 'KomoGami Glex 67', 'Komogami', 45000, 50000, 'Y', 1, NOW(), NOW());
+(1, 'PROD001', 'Gigabyte B60M', 'Gigabyte', 2000000, 2100000, 3, 'Y', 1, NOW(), NOW()),
+(1, 'PROD002', 'MSI Intel Edition', 'MSI', 4300000, 4500000, 0, 'Y', 1, NOW(), NOW()),
+(2, 'PROD003', 'Iphone 14 PRO MAX', 'Iphone', 23000000, 23200000, 0, 'Y', 1, NOW(), NOW()),
+(3, 'PROD004', 'Lenovo LOQ 16GB', 'Lenovo', 15000000, 15999999, 0, 'Y', 1, NOW(), NOW()),
+(3, 'PROD005', 'ASUS ROG TIMELINE', 'ASUS', 65000000, 65300000, 0, 'Y', 1, NOW(), NOW()),
+(3, 'PROD006', 'Acer Predator By45', 'Acer', 2400000, 24300000, 0, 'Y', 1, NOW(), NOW()),
+(4, 'PROD007', 'Powerful Case', 'Powefull', 50000, 50200, 0, 'Y', 1, NOW(), NOW()),
+(5, 'PROD008', 'Coler Master 80+ Bronze 600 wat', 'Color Master', 3000000, 3200000, 50, 'Y', 1, NOW(), NOW()),
+(6, 'PROD009', 'Asus ROG Phone 6', 'ASUS', 12000000, 12300000, 0, 'Y', 1, NOW(), NOW()),
+(7, 'PROD010', 'Samsung ChromeBook Pro', 'Samsung', 200000, 2300000, 0, 'Y', 1, NOW(), NOW()),
+(8, 'PROD011', 'KomoGami Glex 67', 'Komogami', 45000, 50000, 0,  'Y', 1, NOW(), NOW());
 
 INSERT INTO stok (product_id, total_stok, update_stok_date, created_at, updated_at)
 VALUES

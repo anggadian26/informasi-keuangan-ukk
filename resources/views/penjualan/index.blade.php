@@ -1,9 +1,9 @@
 @extends('app')
 @section('head')
-    TransaksiPembelian
+    TransaksiPenjualan
 @endsection
 @section('title2')
-    Transaksi Pembelian
+    Transaksi Penjualan
 @endsection
 
 @section('content')

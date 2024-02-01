@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SubCtgrProductController;
@@ -44,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pembelian_quantity/{id}', [DetailPembelianController::class, 'update']);
     Route::post('/save-transaksi-pembelian', [PembelianController::class, 'store'])->name('saveTransaction.pembelian');
     Route::get('/pembelian-detail/{id}', [PembelianController::class, 'detailData'])->name('pembelianDetail.pembelian');
+
+    Route::get('/penjualan-data', [PenjualanController::class, 'showData'])->name('index.penjualan');
 
     /* -- MASTER -- */ 
     // stok
