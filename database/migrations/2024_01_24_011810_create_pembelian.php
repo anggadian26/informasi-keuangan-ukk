@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('total_bayar', 20, 0)->default(0);
             $table->enum('status_pembayaran', ['L', 'U']);
             $table->text('catatan')->nullable();
+            $table->foreignId('record_id');
             $table->timestamps();
         });
     }

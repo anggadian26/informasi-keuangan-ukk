@@ -31,6 +31,12 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Transaksi</span>
         </li>
+        <li class="menu-item {{ request()->routeIs('') ? 'active' : '' }}">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-up-arrow-alt text-success"></i>
+                <div data-i18n="Analytics">Penjualan</div>
+            </a>
+        </li>
         <li class="menu-item {{ request()->routeIs('index.pembelian', 'transactionPage.pembelian') ? 'active' : '' }}">
             <a href="{{ route('index.pembelian') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-down-arrow-alt text-danger"></i>

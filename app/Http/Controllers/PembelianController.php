@@ -11,6 +11,7 @@ use App\Models\SupplierModel;
 use App\Models\UtangModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PembelianController extends Controller
@@ -86,6 +87,7 @@ class PembelianController extends Controller
         $pembelian->total_bayar = 0;
         $pembelian->status_pembayaran = 'L';
         $pembelian->catatan = '';
+        $pembelian->record_id = Auth::id();
         $pembelian->save();
 
         request()->session()->put('pembelian_id', $pembelian->pembelian_id);
@@ -183,7 +185,16 @@ class PembelianController extends Controller
         ";
 
         $detail = DB::select($query, [$id]);
-        $pembelian = PembelianModel::find($id);
+        // $pembelian = PembelianModel::find($id);
+        $queryPembelian = "
+            SELECT A.*, B.name
+            FROM pembelian A
+            INNER JOIN users B ON A.record_id = B.id
+            WHERE A.pembelian_id = ?
+        ";
+
+        $pembelian = DB::select($queryPembelian, [$id]);
+
         return response()->json(['detail' => $detail, 'pembelian' => $pembelian]);
     }
 

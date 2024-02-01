@@ -289,6 +289,7 @@
                     
                     let id = $(this).data('id');
                     let hargaJual = $(this).val();
+                    console.log(hargaJual);
 
                     if (hargaJual < 1) {
                         $(this).val(1);

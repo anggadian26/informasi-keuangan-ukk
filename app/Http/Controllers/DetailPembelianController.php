@@ -87,27 +87,34 @@ class DetailPembelianController extends Controller
     function update(Request $request, $id)
     { 
         $detail = DetailPembelianModel::find($id);
-        if($request->harga_beli != NULL) {
+        if($request->harga_beli != NULL || $request->harga_beli != 0) {
             $detail->harga_beli = $request->harga_beli;
             $detail->sub_total = $request->harga_beli * $detail->jumlah;
 
             $product = ProductModel::find($detail->product_id);
             $product->product_purcase = $request->harga_beli;
             $product->update();
-        } else {
-            $detail->jumlah = $request->jumlah;
-            $detail->sub_total = $detail->harga_beli * $request->jumlah;
-
-            
-        }
-
-        if($request->harga_jual != NULL) {
+        } else if($request->harga_jual != NULL){
             $detail->harga_jual = $request->harga_jual;
+            $detail->jumlah = $detail->jumlah;
 
             $product = ProductModel::find($detail->product_id);
             $product->product_price = $request->harga_jual;
             $product->update();
+
+        } else {
+            $detail->jumlah = $request->jumlah;
+            $detail->sub_total = $detail->harga_beli * $request->jumlah;
         }
+
+        // if($request->harga_jual != NULL) {
+        //     $detail->harga_jual = $request->harga_jual;
+        //     $detail->jumlah = $detail->jumlah;
+
+        //     $product = ProductModel::find($detail->product_id);
+        //     $product->product_price = $request->harga_jual;
+        //     $product->update();
+        // }
 
         $detail->update();
 
