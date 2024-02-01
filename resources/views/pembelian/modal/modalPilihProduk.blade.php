@@ -76,6 +76,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    var pembelian_id = {{ $pembelian_id }};
     $(document).ready(function() {
         $('#searchProduct').on('input', function() {
             var searchTerm = $(this).val();

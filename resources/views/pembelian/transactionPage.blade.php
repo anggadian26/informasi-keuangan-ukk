@@ -239,7 +239,6 @@
             // Fetch data from the server
             $.get("{{ route('detailProduct.pembelian', ['id' => $pembelian_id]) }}")
                 .done(response => {
-                    console.log("berhasil");
                     updateTable(response.detail);
                 })
                 .fail(errors => {
@@ -466,7 +465,9 @@
             $('#product_id').val(id);
             $('#product_code').val(code);
             $('#pembelian_id').val(pembelian_id);
-            console.log($('.form-produk'));
+            console.log(id);
+            console.log(code);
+            console.log(pembelian_id);
             hideModalProduct();
             addProduct();
         }

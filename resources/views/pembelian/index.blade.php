@@ -14,9 +14,10 @@
             </button>
             @include('pembelian.modal.modalSupplier')
         </div>
-
+        <form action="#" method="GET">
             @csrf
             <div class="row mb-3">
+
                 <div class="col-md-2">
                     <label for="" class="fw-bold">Tanggal</label>
                     <input name="tanggal_pembelian" type="date" class="form-control" placeholder="Tanggal"
@@ -27,7 +28,9 @@
                     <select name="supplier_id" class="form-select">
                         <option value="">- Semua -</option>
                         @foreach ($supplier as $i)
-                            <option value="{{ $i->supplier_id }}" {{ isset($_GET['supplier_id']) && $_GET['supplier_id'] == $i->supplier_id ? 'selected' : '' }}>{{ $i->supplier_name }}</option>
+                            <option value="{{ $i->supplier_id }}"
+                                {{ isset($_GET['supplier_id']) && $_GET['supplier_id'] == $i->supplier_id ? 'selected' : '' }}>
+                                {{ $i->supplier_name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -35,20 +38,24 @@
                     <label for="" class="fw-bold">Jenis Transaksi</label>
                     <select name="jenis_pembelian" class="form-select">
                         <option value="">- Semua -</option>
-                        <option value="cash" {{ isset($_GET['jenis_pembelian']) && $_GET['jenis_pembelian'] == 'cash' ? 'selected' : '' }}>Cash</option>
-                        <option value="credit" {{ isset($_GET['jenis_pembelian']) && $_GET['jenis_pembelian'] == 'credit' ? 'selected' : '' }}>Credit</option>
+                        <option value="cash"
+                            {{ isset($_GET['jenis_pembelian']) && $_GET['jenis_pembelian'] == 'cash' ? 'selected' : '' }}>
+                            Cash</option>
+                        <option value="credit"
+                            {{ isset($_GET['jenis_pembelian']) && $_GET['jenis_pembelian'] == 'credit' ? 'selected' : '' }}>
+                            Credit</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <button type="submit" class="btn btn-primary mt-4 btn-cari">Cari</button>
                 </div>
             </div>
-        </form> 
+        </form>
         <div class="table-responsive text-nowrap">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th><strong>No</strong></th>
+                        <th><strong>No Nota</strong></th>
                         <th><strong>Tanggal</strong></th>
                         <th><strong>Supplier</strong></th>
                         <th><strong>Total Item</strong></th>
@@ -56,150 +63,112 @@
                         <th><strong>Diskon</strong></th>
                         <th><strong>Total Bayar</strong></th>
                         <th><strong>Jenis Transaksi</strong></th>
-                        <th><strong>Aksi</strong></th>
+                        <th><strong>Detail</strong></th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @if ($data == null)
+                    @if (count($pembelian) < 1)
                         <tr>
-                            <td colspan="8" style="padding: 20px; font-size: 20px;"><span>No data found</span> </td>
+                            <td colspan="9" style="padding: 20px; font-size: 20px;"><span>No data found</span> </td>
                         </tr>
                     @else
-                        @foreach ($data as $key => $pembelian)
+                        @foreach ($pembelian as $i)
+                            {{-- @include('pembelian.modal.modalDetailPembelian') --}}
                             <tr>
-                                <td>{{ $key+1 }}</td>
-                                <td>{{ $pembelian->tanggal_pembelian }}</td>
-                                <td>{{ $pembelian->supplier->supplier_name }}</td>
-                                <td>{{ $pembelian->total_item }}</td>
-                                <td>{{ $pembelian->total_harga }}</td>
-                                <td>{{ $pembelian->diskon }}%</td>
-                                <td>Rp. {{ $pembelian->total_bayar }}</td>
+                                <td><span class="badge bg-primary">{{ $i->nota }}</span></td>
+                                <td>{{ $i->tanggal_pembelian }}</td>
+                                <td>{{ $i->supplier_name }}</td>
+                                <td>{{ $i->total_item }}</td>
+                                <td>Rp {{ number_format($i->total_harga, 0, ',', '.') }}</td>
+                                <td>{{ $i->diskon }}%</td>
+                                <td>Rp {{ number_format($i->total_bayar, 0, ',', '.') }}</td>
                                 <td>
-                                    @if ($pembelian->jenis_pembelian == 'credit')
-                                        <span class="badge rounded-pill bg-warning">Credit</span>
+                                    @if ($i->jenis_pembelian == 'credit')
+                                        <span class="badge bg-warning">Credit</span>
                                     @else
-                                        <span class="badge rounded-pill bg-success">Cash</span>
+                                        <span class="badge bg-success">Cash</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#"><i
-                                                    class="bx bx-detail me-1 text-primary"></i>
-                                                Detail</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#"><i
-                                                    class="bx bx-trash-alt me-1 text-danger"></i>
-                                                Hapus</a>
-                                        </div> 
+                                    <button type="button" onclick="detailPembelian('{{ $i->pembelian_id }}')"
+                                        data-bs-toggle="modal" data-bs-target="#modalDetailPembelian" class="btn p-2 btn-primary">
+                                        <span class="bx bxs-detail"></span>
+                                    </button>                                    
                                 </td>
                             </tr>
                         @endforeach
                     @endif
-                    {{-- <tr>
-                        <td>1</td>
-                        <td>26/09/2024</td>
-                        <td>Wonka</td>
-                        <td>120</td>
-                        <td>Rp. 900.000</td>
-                        <td>20%</td>
-                        <td>Rp. 750.000</td>
-                        <td><span class="badge rounded-pill bg-success">Cash</span></td>
-                        <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                    data-bs-toggle="dropdown">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                        data-bs-target="#"><i
-                                            class="bx bx-detail me-1 text-primary"></i>
-                                        Detail</a>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                        data-bs-target="#"><i
-                                            class="bx bx-trash-alt me-1 text-danger"></i>
-                                        Hapus</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr> --}}
-                    
-                    {{-- @if (count($kategori) < 1)
-                        <tr>
-                            <td colspan="8" style="padding: 20px; font-size: 20px;"><span>No data found</span> </td>
-                        </tr>
-                    @else
-                        @foreach ($kategori as $i)
-                            @include('ctgr-produk.modal.modalDelCtgr')
-                            @include('ctgr-produk.modal.modalDetailCtgr')
-                            @include('ctgr-produk.modal.modalEditCtgr')
-                            <tr>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#detailCtgrProduct{{ $i->ctgr_product_id }}"><i
-                                                    class="bx bx-detail me-1 text-primary"></i>
-                                                Detail</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#editCtgrProduct{{ $i->ctgr_product_id }}"><i
-                                                    class="bx bx-edit-alt me-1 text-warning"></i>
-                                                Ubah</a>
-                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#delCtgrProduct{{ $i->ctgr_product_id }}"><i
-                                                    class="bx bx-trash-alt me-1 text-danger"></i>
-                                                Hapus</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{ $i->ctgr_product_code }}</td>
-                                <td>{{ $i->ctgr_product_name }}</td>
-                                <td>
-                                    @if ($i->status == 'Y')
-                                        <span class="badge rounded-pill bg-success">Aktif</span>
-                                    @else
-                                        <span class="badge rounded-pill bg-danger">Tidak Aktif</span>
-                                    @endif
-
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif --}}
                 </tbody>
             </table>
+            @include('pembelian.modal.modalDetailPembelian')
         </div>
         <div class="mt-5">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
-                    <li class="page-item {{ $data->currentPage() == 1 ? 'disabled' : '' }} prev">
-                        <a class="page-link" href="{{ $data->previousPageUrl() }}" aria-label="Previous">
+                    <li class="page-item {{ $pembelian->currentPage() == 1 ? 'disabled' : '' }} prev">
+                        <a class="page-link" href="{{ $pembelian->previousPageUrl() }}" aria-label="Previous">
                             <i class="tf-icon bx bx-chevrons-left"></i>
                         </a>
                     </li>
-                    @for ($i = 1; $i <= $data->lastPage(); $i++)
-                        <li class="page-item {{ $data->currentPage() == $i ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $data->url($i) }}">{{ $i }}</a>
+                    @for ($i = 1; $i <= $pembelian->lastPage(); $i++)
+                        <li class="page-item {{ $pembelian->currentPage() == $i ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $pembelian->url($i) }}">{{ $i }}</a>
                         </li>
                     @endfor
-                    <li class="page-item {{ $data->currentPage() == $data->lastPage() ? 'disabled' : '' }} next">
-                        <a class="page-link" href="{{ $data->nextPageUrl() }}" aria-label="Next">
+                    <li class="page-item {{ $pembelian->currentPage() == $pembelian->lastPage() ? 'disabled' : '' }} next">
+                        <a class="page-link" href="{{ $pembelian->nextPageUrl() }}" aria-label="Next">
                             <i class="tf-icon bx bx-chevrons-right"></i>
                         </a>
                     </li>
                 </ul>
-                <span>Total data {{ $total[0]->totalData }}, halaman {{ $data->currentPage() }} dari
-                    {{ $data->lastPage() }}</span>
+                <span>Total Data {{ $total[0]->totalData }}, halaman {{ $pembelian->currentPage() }} dari
+                    {{ $pembelian->lastPage() }}</span>
             </nav>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function detailPembelian(id) {
+            $.ajax({
+                url: "{{ route('pembelianDetail.pembelian', ['id' => ':id']) }}".replace(':id', id),
+                method: "GET",
+                success: function(response) {
+                    console.log(response);
+                    $('#notavalue').text(response.pembelian.nota);
+                    var detailData = response.detail;
+                    var tableBody = $('#table-detail tbody');
+
+                    tableBody.empty();
+
+                    if (detailData.length > 0) {
+                        $.each(detailData, function(index, detail) {
+                            var newRow = '<tr>' +
+                                '<td>' + detail.product_code + '</td>' +
+                                '<td>' + detail.product_name + '</td>' +
+                                '<td>' + 'Rp ' + formatCurrency(detail.product_purcase) + '</td>' +
+                                '<td>' + detail.jumlah + '</td>' +
+                                '<td>' + 'Rp ' + formatCurrency(detail.sub_total) + '</td>' +
+                                '</tr>';
+
+                            tableBody.append(newRow);
+                        });
+                    } else {
+                        // Tampilkan pesan jika tidak ada hasil
+                        tableBody.append(
+                            '<tr><td colspan="5" style="padding: 20px; font-size: 20px;"><span>Tidak Ada Product Yang terdaftar</span></td></tr>'
+                        );
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        function formatCurrency(amount) {
+            // Format amount to currency with Indonesian Rupiah (IDR) format
+            return new Intl.NumberFormat('id-ID').format(amount);
+        }
+    </script>
 @endsection

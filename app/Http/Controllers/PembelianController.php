@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailPembelianModel;
 use App\Models\PembelianModel;
+use App\Models\PengeluaranModel;
 use App\Models\ProductModel;
 use App\Models\StokModel;
 use App\Models\SupplierModel;
@@ -18,26 +19,29 @@ class PembelianController extends Controller
     {
         $supplier = SupplierModel::all();
 
-        $pembelians = PembelianModel::with('supplier', 'details.product');
+        $tanggal_pembelian = $request->tanggal_pembelian;
+        $supplier_id = $request->supplier_id;
+        $jenis_pembelian = $request->jenis_pembelian;
 
-        // Filter berdasarkan tanggal pembelian
-        if ($request->has('tanggal_pembelian')) {
-            $pembelians->where('tanggal_pembelian', $request->tanggal_pembelian);
-        }
+        $query = PembelianModel::query()
+            ->select('A.*', 'B.supplier_name')
+            ->from('pembelian AS A')
+            ->join('supplier AS B', 'A.supplier_id', '=', 'B.supplier_id')
+            ->when($tanggal_pembelian, function($query, $tanggal_pembelian) {
+                return $query->where('A.tanggal_pembelian', '=', $tanggal_pembelian);
+            })
+            ->when($supplier_id, function($query, $supplier_id) {
+                return $query->where('A.supplier_id', '=', $supplier_id);
+            })
+            ->when($jenis_pembelian, function($query, $jenis_pembelian) {
+                return $query->where('A.jenis_pembelian', '=', $jenis_pembelian);
+            })
+            ->orderBy('A.tanggal_pembelian', 'DESC')
+        ;
 
-        // Filter berdasarkan ID supplier
-        if ($request->has('supplier_id')) {
-            $pembelians->whereHas('supplier', function ($query) use ($request) {
-                $query->where('supplier_id', $request->supplier_id);
-            });
-        }
+        // $pembelians = PembelianModel::with('supplier', 'details.product');
 
-        // Filter berdasarkan jenis pembelian
-        if ($request->has('jenis_pembelian')) {
-            $pembelians->where('jenis_pembelian', $request->jenis_pembelian);
-        }
-
-        $data = $pembelians->paginate(30);
+        $pembelian = $query->paginate(30);
 
         $queryCount = "
             SELECT COUNT(1) AS totalData
@@ -46,7 +50,7 @@ class PembelianController extends Controller
         $total = DB::select($queryCount);
         
         // return response()->json($data);
-        return view('pembelian.index', compact('supplier', 'data', 'total'));
+        return view('pembelian.index', compact('supplier', 'pembelian', 'total'));
     }
 
     public function searchSupplier(Request $request)
@@ -61,9 +65,19 @@ class PembelianController extends Controller
 
     public function createTransaction($id)
     {
+        $today = date("Ymd"); 
+        $random = mt_rand(1000, 9999); 
+
+        $number = $today . $random; 
+
+        if(PembelianModel::where('nota', $number)->exists()) {
+            $random = mt_rand(1000, 9999); 
+            $number = $today . $random;
+        }
 
         $pembelian = new PembelianModel();
         $pembelian->supplier_id = $id;
+        $pembelian->nota = $number;
         $pembelian->tanggal_pembelian = Carbon::now()->toDateString();
         $pembelian->jenis_pembelian = 'cash';
         $pembelian->total_item = 0;
@@ -80,6 +94,7 @@ class PembelianController extends Controller
         return redirect()->route('transactionPage.pembelian');
         
     }
+    
 
     public function store(Request $request)
     {
@@ -114,9 +129,27 @@ class PembelianController extends Controller
                 'status_pembayaran'     => 'U'
             ];
             UtangModel::create($data);
+
+            $pengeluaranData = [
+                'jenis_pengeluaran'     => 'P',
+                'tanggal_pengeluaran'   => Carbon::now()->toDateString(),
+                'total_nominal'         => $request->uang_muka,
+                'keterangan'            => 'Pembelian Credit'
+            ];
+            PengeluaranModel::create($pengeluaranData);
+
             $pembelian->status_pembayaran = 'U';
+
        } else {
             $pembelian->status_pembayaran = 'L';
+
+            $pengeluaranData = [
+                'jenis_pengeluaran'     => 'P',
+                'tanggal_pengeluaran'   => Carbon::now()->toDateString(),
+                'total_nominal'         => $total_bayar,
+                'keterangan'            => 'Pembelian Cash'
+            ];
+            PengeluaranModel::create($pengeluaranData);
        }
        
        $pembelian->jenis_pembelian = $request->jenis_pembelian;
@@ -137,6 +170,21 @@ class PembelianController extends Controller
 
        return redirect()->route('index.pembelian')->with('toast_success', 'Transaksi Pembelian berhasil disimpan.');
 
+    }
+
+    public function detailData($id) {
+
+        // $detail = DetailPembelianModel::where('pembelian_id', $id)->get();
+        $query = "
+            SELECT A.*, B.product_name, B.product_code, B.product_purcase
+            FROM detail_pembelian A
+            INNER JOIN product B ON A.product_id = B.product_id
+            WHERE A.pembelian_id = ?
+        ";
+
+        $detail = DB::select($query, [$id]);
+        $pembelian = PembelianModel::find($id);
+        return response()->json(['detail' => $detail, 'pembelian' => $pembelian]);
     }
 
 }

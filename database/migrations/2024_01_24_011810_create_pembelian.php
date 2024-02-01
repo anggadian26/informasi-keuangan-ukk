@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->id('pembelian_id');
+            $table->bigInteger('nota')->unique();
             $table->foreignId('supplier_id');
             $table->date('tanggal_pembelian');
             $table->enum('jenis_pembelian', ['cash', 'credit']);
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->tinyInteger('diskon')->default(0);
             $table->decimal('total_bayar', 20, 0)->default(0);
             $table->enum('status_pembayaran', ['L', 'U']);
-            $table->string('catatan')->nullable();
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }
