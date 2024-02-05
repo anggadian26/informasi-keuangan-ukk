@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('utang', function (Blueprint $table) {
             $table->id('utang_id');
             $table->foreignId('pembelian_id');
+            $table->date('tanggal');
             $table->decimal('uang_muka', 20, 1);
             $table->decimal('sisa_pembayaran', 20, 1);
             $table->date('tanggal_jatuh_tempo');

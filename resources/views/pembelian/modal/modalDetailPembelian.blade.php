@@ -11,8 +11,12 @@
                     <div class="col-md-3">
                         <table>
                             <tr>
-                                <td>No Nota :</td>
+                                <td>No Nota </td>
                                 <td class="fw-bold text-primary" id="notavalue"></td>
+                            </tr>
+                            <tr>
+                                <td>Dibuat oleh</td>
+                                <td class="fw-bold" id="authorBy"></td>
                             </tr>
                         </table>
                     </div>

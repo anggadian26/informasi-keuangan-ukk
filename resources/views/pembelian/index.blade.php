@@ -135,7 +135,8 @@
                 method: "GET",
                 success: function(response) {
                     console.log(response);
-                    $('#notavalue').text(response.pembelian.nota);
+                    $('#notavalue').text(': ' + response.pembelian[0].nota);
+                    $('#authorBy').text( ': ' + response.pembelian[0].name);
                     var detailData = response.detail;
                     var tableBody = $('#table-detail tbody');
 

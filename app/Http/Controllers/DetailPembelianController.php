@@ -96,7 +96,7 @@ class DetailPembelianController extends Controller
             $product->update();
         } else if($request->harga_jual != NULL){
             $detail->harga_jual = $request->harga_jual;
-            $detail->jumlah = $detail->jumlah;
+            // $detail->jumlah = $detail->jumlah;
 
             $product = ProductModel::find($detail->product_id);
             $product->product_price = $request->harga_jual;
@@ -107,14 +107,7 @@ class DetailPembelianController extends Controller
             $detail->sub_total = $detail->harga_beli * $request->jumlah;
         }
 
-        // if($request->harga_jual != NULL) {
-        //     $detail->harga_jual = $request->harga_jual;
-        //     $detail->jumlah = $detail->jumlah;
-
-        //     $product = ProductModel::find($detail->product_id);
-        //     $product->product_price = $request->harga_jual;
-        //     $product->update();
-        // }
+        
 
         $detail->update();
 

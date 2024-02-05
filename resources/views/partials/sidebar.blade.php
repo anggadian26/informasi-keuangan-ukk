@@ -44,6 +44,17 @@
             </a>
         </li>
 
+        {{-- financial --}}
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Finansial</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.utang') ? 'active' : '' }}">
+            <a href="{{ route('index.utang') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                <div data-i18n="Analytics">Utang</div>
+            </a>
+        </li>
+
         {{-- Master --}}
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Master</span>

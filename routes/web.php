@@ -9,6 +9,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SubCtgrProductController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UtangController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pembelian-detail/{id}', [PembelianController::class, 'detailData'])->name('pembelianDetail.pembelian');
 
     Route::get('/penjualan-data', [PenjualanController::class, 'showData'])->name('index.penjualan');
+
+    /* -- FINANSIAL -- */
+    // utang
+    Route::get('/utang-data', [UtangController::class, 'showData'])->name('index.utang');
+    Route::get('/detail-utang/{id}', [UtangController::class, 'detailUtang'])->name('detail.utang');
+    Route::post('/bayar-utang', [UtangController::class, 'bayarUtang'])->name('bayar.utang');
 
     /* -- MASTER -- */ 
     // stok

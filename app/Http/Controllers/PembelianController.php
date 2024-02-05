@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailPembelianModel;
+use App\Models\DetailUtangModel;
 use App\Models\PembelianModel;
 use App\Models\PengeluaranModel;
 use App\Models\ProductModel;
@@ -125,12 +126,23 @@ class PembelianController extends Controller
             ]);
             $data = [
                 'pembelian_id'  => $pembelian_id,
+                'tanggal'       => Carbon::now()->toDateString(),
                 'uang_muka'     => $request->uang_muka,
                 'sisa_pembayaran'   => $total_bayar - $request->uang_muka,
                 'tanggal_jatuh_tempo'   => $request->tanggal_jatuh_tempo,
                 'status_pembayaran'     => 'U'
             ];
-            UtangModel::create($data);
+            $utang = UtangModel::create($data);
+
+            $dataDetail = [
+                'utang_id'          => $utang->utang_id,
+                'detail_tanggal'    => Carbon::now()->toDateString(),
+                'bayar'             => $utang->uang_muka,
+                'sisa'              => $utang->sisa_pembayaran,
+                'record_id'         => Auth::user()->id,
+            ];
+
+            DetailUtangModel::create($dataDetail);
 
             $pengeluaranData = [
                 'jenis_pengeluaran'     => 'P',
