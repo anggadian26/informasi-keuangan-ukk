@@ -1,4 +1,4 @@
-<div class="modal fade" id="bayarUtang{{ $i->utang_id }}" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="bayarUtang" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -20,8 +20,8 @@
                                 </div>
                             @enderror
                         </div>
-                        <input type="hidden" id="hiddenNominalInput{{ $i->utang_id }}" name="bayar" />
-                        <input type="hidden" name="utang_id" id="utang_id" value="{{ $i->utang_id }}"/>
+                        <input type="hidden" id="hiddenNominalInput" name="bayar" />
+                        <input type="hidden" name="utang_id" id="utang_id"/>
                     </div>
 
                 </div>
@@ -47,17 +47,17 @@
             input.value = `Rp. ${formattedValue}`;
             input.setAttribute('data-value', numericValue);
 
-            let utangId = document.getElementById('utang_id').value;
-            console.log(utangId);
+            // let utangId = document.getElementById('utang_id').value;
+            // console.log(utangId);
 
             // Set nilai sebenarnya di input tersembunyi
-            let hiddenInput = document.getElementById('hiddenNominalInput' + utangId);
+            let hiddenInput = document.getElementById('hiddenNominalInput');
             hiddenInput.value = numericValue;
         } else {
             // Tangani jika input tidak berisi nilai numerik
             input.value = '';
             input.setAttribute('data-value', '');
-            let hiddenInput = document.getElementById('hiddenNominalInput' + utangId);
+            let hiddenInput = document.getElementById('hiddenNominalInput');
             hiddenInput.value = '';
         }
     }

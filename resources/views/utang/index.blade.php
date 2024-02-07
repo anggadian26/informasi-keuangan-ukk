@@ -61,7 +61,8 @@
                                 <td>
                                     @if ($i->status_pembayaran == 'U')
                                         <span class="badge bg-warning">Utang</span>
-                                    @else
+                                    @endif
+                                    @if ($i->status_pembayaran == 'L')
                                         <span class="badge bg-success">Lunas</span>
                                     @endif
                                 </td>
@@ -115,14 +116,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function detailUtang($id) {
-            console.log($id);
+            currentId = $id;
             $.ajax({
                 url: "{{ route('detail.utang', ['id' => ':id']) }}".replace(':id', $id),
                 method: "GET",
                 success: function(response) {
-                    console.log(response);
                     var detailData = response.utang;
-                    console.log(detailData);
                     var tableBody = $('#table-detail tbody');
 
                     tableBody.empty();
@@ -141,7 +140,7 @@
                     } else {
                         // Tampilkan pesan jika tidak ada hasil
                         tableBody.append(
-                            '<tr><td colspan="5" style="padding: 20px; font-size: 20px;"><span>Tidak Ada Product Yang terdaftar</span></td></tr>'
+                            '<tr><td colspan="5" style="padding: 20px; font-size: 20px;"><span>Tidak Utang Yang terdaftar</span></td></tr>'
                         );
                     }
                 },
@@ -154,6 +153,13 @@
         function formatCurrency(amount) {
             // Format amount to currency with Indonesian Rupiah (IDR) format
             return new Intl.NumberFormat('id-ID').format(amount);
+        }
+
+        function bayar() {
+            console.log(currentId);
+            $('#modalDetailUtang').modal('hide');
+            $('#bayarUtang').modal('show');
+            $('#utang_id').val(currentId);
         }
 
 

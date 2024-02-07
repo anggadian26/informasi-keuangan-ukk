@@ -23,7 +23,7 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-
+                                
                             </tbody>
                         </table>
                     </div>

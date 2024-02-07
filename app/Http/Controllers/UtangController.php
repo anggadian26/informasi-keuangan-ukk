@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailUtangModel;
+use App\Models\PembelianModel;
 use App\Models\UtangModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class UtangController extends Controller
         $status_pembayaran = $request->status_pembayaran;
 
         $query = UtangModel::query()
-            ->select()
+            ->select('A.*', 'B.nota', 'B.total_bayar')
             ->from('utang AS A')
             ->join('pembelian AS B', 'A.pembelian_id', '=', 'B.pembelian_id')
             ->when($tanggal, function($query, $tanggal) {
@@ -72,6 +73,13 @@ class UtangController extends Controller
 
         $utang = UtangModel::find($val['utang_id']);
 
+        $request->validate([
+            'bayar' => 'required|numeric|min:0.01|max:' . $utang->sisa_pembayaran,
+            'utang_id' => 'required',
+        ], [
+            'bayar.max' => 'Nilai pembayaran tidak boleh lebih besar dari sisa pembayaran utang.',
+        ]);
+
         $utang_sisa = $utang->sisa_pembayaran - $val['bayar'];
 
         $data = [
@@ -88,11 +96,17 @@ class UtangController extends Controller
             'sisa_pembayaran' => $utang_sisa
         ]);
 
-        if ($utang_sisa <= 0) {
+        if ($utang_sisa == 0) {
             $utang->update([
                 'status_pembayaran' => 'L'
             ]);
+
+            $pembelian = PembelianModel::find($utang->pembelian_id);
+            $pembelian->update([
+                'status_pembayaran' => 'L'
+            ]);
         }
+
 
         return redirect()->route('index.utang')->with('toast_success', 'Pembayaran utang telah sukses!');
     }
