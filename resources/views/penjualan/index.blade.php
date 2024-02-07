@@ -9,7 +9,7 @@
 @section('content')
     <div class="card p-3">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" class="btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modalSupplier">
+            <button type="button" class="btn-lg btn-primary" onclick="addTransaction()">
                 Transaksi Baru
             </button>
             {{-- @include('pembelian.modal.modalSupplier') --}}
@@ -128,6 +128,18 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        
+        function addTransaction(){
+            $.ajax({
+                url: "{{ route('transactionCreate.penjualan') }}", 
+                method: "GET",
+                success: function(response) {
+                    console.log("response success create transaction");
+                    window.location.href = "{{ route('transactionPage.penjualan') }}";
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            })
+        }
     </script>
 @endsection

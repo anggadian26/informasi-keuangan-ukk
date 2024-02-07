@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
+use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
@@ -47,7 +48,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/save-transaksi-pembelian', [PembelianController::class, 'store'])->name('saveTransaction.pembelian');
     Route::get('/pembelian-detail/{id}', [PembelianController::class, 'detailData'])->name('pembelianDetail.pembelian');
 
+    // Penjualan index
     Route::get('/penjualan-data', [PenjualanController::class, 'showData'])->name('index.penjualan');
+    Route::get('/transaksi-create', [PenjualanController::class, 'create'])->name('transactionCreate.penjualan');
+    // Penjualan Transaksi
+    Route::get('/transaksi-penjualan-page', [DetailPenjualanController::class, 'index'])->name('transactionPage.penjualan');
+    Route::get('/search-product-penjualan', [DetailPenjualanController::class, 'searchProduct']);
+    Route::post('/store-detail-penjualan', [DetailPenjualanController::class, 'storePenjualanProduct'])->name('storeTransactionDetail.penjualan');
+    Route::get('/penjualan-detail-produk/{id}/data', [DetailPenjualanController::class, 'data'])->name('productDetail.pembelian');
+    Route::post('/penjualan_quantity/{id}', [DetailPenjualanController::class, 'updateQty']);
+    Route::delete('delete-penjualan-detail/{id}', [DetailPenjualanController::class, 'deleteDetailPenjualan']);
+
+    Route::get('/transaksi-penjualan-back/{id}', [DetailPenjualanController::class, 'backTransaction'])->name('backTransaction.penjualan');
 
     /* -- FINANSIAL -- */
     // utang

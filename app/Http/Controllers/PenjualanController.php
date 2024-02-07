@@ -36,7 +36,7 @@ class PenjualanController extends Controller
         $penjualan->total_item = 0;
         $penjualan->total_harga = 0;
         $penjualan->diskon = 0;
-        $penjualan->result_harga = 0;
+        $penjualan->harga_akhir = 0;
         $penjualan->bayar = 0;
         $penjualan->kembalian = 0;
         $penjualan->status_pembayaran = 'L';
@@ -45,6 +45,6 @@ class PenjualanController extends Controller
         $penjualan->save();
 
         session(['penjualan_id' => $penjualan->penjualan_id]);
-        return redirect();
+        return redirect()->route('transactionPage.penjualan');
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('penjualan_id');
             $table->foreignId('product_id');
             $table->decimal('harga_jual', 20,0)->default(0);
+            $table->decimal('harga_diskon', 20,0)->default(0);
             $table->integer('jumlah')->default(0);
             $table->tinyInteger('diskon')->default(0);
             $table->decimal('sub_total', 20, 0);
