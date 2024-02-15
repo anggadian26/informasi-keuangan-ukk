@@ -73,7 +73,7 @@
                         </tr>
                     @else
                         @foreach ($pembelian as $i)
-                            {{-- @include('pembelian.modal.modalDetailPembelian') --}}
+                            
                             <tr>
                                 <td><span class="badge bg-primary">{{ $i->nota }}</span></td>
                                 <td>{{ $i->tanggal_pembelian }}</td>

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('harga_akhir', 20, 0)->default(0);
             $table->decimal('bayar', 20, 0);
             $table->decimal('kembalian', 20, 0);
-            $table->enum('status_pembayaran', ['L', 'N']);
+            $table->enum('status_pembayaran', ['L', 'U']);
             $table->text('catatan')->nullable();
             $table->foreignId('record_id');
             $table->timestamps();

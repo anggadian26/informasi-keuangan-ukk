@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('telepon');
             $table->text('alamat');
+            $table->foreignId('diskon_id')->nullable();
+            $table->enum('status', ['Y','N']);
             $table->timestamps();
         });
     }

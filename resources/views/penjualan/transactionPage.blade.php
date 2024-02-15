@@ -29,8 +29,27 @@
             display: none;
         }
 
+        .tampil-kembalian {
+            font-size: 5em;
+            text-align: center;
+            height: 100px;
+        }
+
+        .has-error .form-control {
+            border-color: #a94442;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        }
+
+
         @media(max-width: 768px) {
             .tampil-bayar {
+                font-size: 3em;
+                height: 70px;
+                padding-top: 5px;
+            }
+
+            .tampil-kembalian {
                 font-size: 3em;
                 height: 70px;
                 padding-top: 5px;
@@ -86,7 +105,7 @@
                                 </div>
                             </div>
                             @include('penjualan.modal.pilihProdukModal')
-                            {{-- @include('pembelian.modal.modalInfo') --}}
+                            
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-striped">
                                     <thead>
@@ -109,17 +128,23 @@
                             </div>
                             <div class="row mt-5">
                                 <div class="col-lg-8">
+                                    <span class="fw-bold">Bayar :</span>
                                     <div class="tampil-bayar bg-primary text-white"></div>
+                                    <div class="tampil-terbilang"></div>
+                                    <br>
+                                    <span class="fw-bold">kembalian :</span>
+                                    <div class="tampil-kembalian bg-primary text-white"></div>
                                     <div class="tampil-terbilang"></div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <form action="#" class="form-pembelian" method="post">
+                                    <form action="{{ route('saveTransaction.penjualan') }}" class="form-penjualan" method="post">
                                         @csrf
-                                        <input type="hidden" name="penjualan_id" value="">
+                                        <input type="hidden" name="penjualan_id" value="{{ $penjualan_id }}">
                                         <input type="hidden" name="total_harga" id="totalInputan">
                                         <input type="hidden" name="total_item" id="total_item">
-                                        <input type="hidden" name="diskon" id="diskonInputan">
-                                        <input type="hidden" name="total_bayar" id="bayar">
+                                        <input type="hidden" name="bayar" id="bayar">
+                                        <input type="hidden" name="kembalian" id="kembalianInputan">
+
 
                                         <div class="form-group row mb-2">
                                             <label for="totalrp" class="col-lg-4 control-label">Total</label>
@@ -129,34 +154,14 @@
                                         </div>
 
                                         <div class="form-group row mb-2">
-                                            <label for="totalrp" class="col-lg-4 control-label">Member</label>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Recipient's username"
-                                                        aria-label="Recipient's username"
-                                                        aria-describedby="button-addon2">
-                                                    <button class="btn btn-primary" type="button"
-                                                        id="button-addon2"><i class='bx bx-right-arrow-alt'></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row mb-2">
-                                            <label for="diskon" class="col-lg-4 control-label">Diskon (%)</label>
-                                            <div class="col-lg-8">
-                                                <input type="number" name="diskon" id="diskon" value="0"
-                                                    class="form-control" onchange="updateBayar()">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row mb-2">
                                             <label for="ppn" class="col-lg-4 control-label">PPN 11%</label>
                                             <div class="col-lg-8">
                                                 <input type="text" id="ppn" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-2">
-                                            <label for="bayar" class="col-lg-4 control-label">Bayar + PPN</label>
+                                            <label for="
+                                            " class="col-lg-4 control-label">Bayar + PPN</label>
                                             <div class="col-lg-8">
                                                 <input type="text" id="bayarrp" class="form-control" readonly>
                                             </div>
@@ -165,14 +170,52 @@
                                             <label for="" class="col-lg-4 control-label">Jenis
                                                 Pembelian</label>
                                             <div class="col-lg-8">
-                                                <select name="jenis_pembelian" class="form-select"
-                                                    id="jenis_pembelian" aria-label="Default select example">
+                                                <select name="jenis_transaksi" class="form-select"
+                                                    id="jenis_transaksi" aria-label="Default select example">
                                                     <option value="cash">Cash</option>
                                                     <option value="credit">Credit</option>
                                                 </select>
                                             </div>
                                         </div>
 
+                                        <div class="form-group row mb-2" id="diterima_input" >
+                                            <label for="diterima" class="col-lg-4 control-label">Diterima</label>
+                                            <div class="col-lg-8">
+                                                <input type="number" name="diterima" id="diterima" oninput="updateBayar()" 
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2" id="kembalian_input">
+                                            <label for="kembalian" class="col-lg-4 control-label">Kembalian</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" id="kembalian"
+                                                    class="form-control" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-2" id="nama_customer_input" style="display: none;">
+                                            <label for="uang_muka" class="col-lg-4 control-label">Nama Customer</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" name="nama_customer" id="nama_customer"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2" id="alamat_customer_input" style="display: none;">
+                                            <label for="uang_muka" class="col-lg-4 control-label">Alamat Customer</label>
+                                            <div class="col-lg-8">
+                                                <textarea class="form-control" name="alamat_customer" id="alamat_customer" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2" id="dp_zero_input" style="display: none;">
+                                            <label for="" class="col-lg-4 control-label">DP 0%</label>
+                                            <div class="col-lg-8">
+                                                <select name="dp_zero" class="form-select"
+                                                    id="dp_zero" aria-label="Default select example">
+                                                    <option value="N">Tidak</option>
+                                                    <option value="Y">Ya</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group row mb-2" id="uang_muka_input" style="display: none;">
                                             <label for="uang_muka" class="col-lg-4 control-label">Uang Muka</label>
                                             <div class="col-lg-8">
@@ -282,7 +325,8 @@
                     let id = $(this).data('id');
                     let jumlah = $(this).val();
 
-                    let stok = $(this).closest('tr').find('.stok').text();
+                    let stok = parseInt(detail.produk.stok.total_stok);
+                    console.log(stok);
 
                     if (jumlah < 1) {
                         $(this).val(1);
@@ -295,7 +339,7 @@
                         return;
                     }
 
-                    if (jumlah > parseInt(stok)) {
+                    if (jumlah > stok) {
                         $(this).val(stok);
                         alert('Jumlah tidak boleh melebihi stok');
                         return;
@@ -317,10 +361,82 @@
                 });
             });
 
-
-
             $('#totalrp').val('Rp ' + total.toLocaleString('id-ID'));
+            updateBayar();
         }
+
+        function updateBayar() {
+            let diterima = parseFloat($('#diterima').val());
+            let totalString = $('#totalrp').val().replace(/\./g, ''); 
+            let totalReplace = totalString.replace(/[^\d.-]/g, '');
+            let bayar = parseFloat(totalReplace);
+
+            console.log(diterima);
+
+            let ppn = (11 / 100) * bayar;
+            let resultBayar = bayar + ppn;
+
+            let kembalianResult = diterima - resultBayar;
+
+            if(isNaN(kembalianResult)) {
+                kembalian = 0;
+            } else {
+                kembalian = kembalianResult;
+            }
+
+            console.log(kembalian)
+
+            isiForm(diterima, resultBayar, kembalian)
+
+            $('#bayarrp').val('Rp ' + resultBayar.toLocaleString('id-ID'));
+            $('#kembalian').val('Rp ' + kembalian.toLocaleString('id-ID'));
+            $('#ppn').val('Rp ' + ppn.toLocaleString('id-ID'));
+            $('.tampil-bayar').text('Rp ' + resultBayar.toLocaleString('id-ID'));
+            $('.tampil-kembalian').text('Rp ' + kembalian.toLocaleString('id-ID'));
+
+        }
+
+        function isiForm(diterima, resultBayar, kembalian) {
+            let totalHarga = resultBayar; 
+            console.log(totalHarga);
+            $('#totalInputan').val(totalHarga);
+          
+            let totalItem = $('#detailTableBody tr').length; 
+
+            $('#total_item').val(totalItem);
+
+            let bayar = diterima; 
+            $('#bayar').val(bayar);
+            $('#kembalianInputan').val(kembalian);
+        }
+
+        function saveTransaksi() {
+            $('.form-penjualan').submit();
+        }
+
+        $(document).ready(function() {
+            $('#jenis_transaksi').change(function() {
+                if ($(this).val() === 'credit') {
+                    $('#uang_muka_input').show(); 
+                    $('#tanggal_jatuh_tempo_input').show(); 
+                    $('#nama_customer_input').show(); 
+                    $('#alamat_customer_input').show(); 
+                    $('#dp_zero_input').show(); 
+                    $('#diterima_input').hide(); 
+                    $('#kembalian_input').hide();
+                    $('#diterima').val(null);
+                    updateBayar();
+                } else {
+                    $('#uang_muka_input').hide(); 
+                    $('#tanggal_jatuh_tempo_input').hide(); 
+                    $('#diterima_input').show(); 
+                    $('#kembalian_input').show();
+                    $('#nama_customer_input').hide(); 
+                    $('#alamat_customer_input').hide(); 
+                    $('#dp_zero_input').hide(); 
+                }
+            });
+        });
 
         $(document).on('click', '.delete-item', function(e) {
             e.preventDefault();

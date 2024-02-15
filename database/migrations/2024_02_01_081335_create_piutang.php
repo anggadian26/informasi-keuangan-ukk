@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('piutang', function (Blueprint $table) {
             $table->id('piutang_id');
             $table->foreignId('penjualan_id');
+            $table->enum('dp_zero', ['Y', 'N']);
             $table->string('nama_customer');
+            $table->text('alamat_customer');
             $table->decimal('jumlah_piutang', 20, 0)->default(0);
             $table->decimal('uang_muka', 20, 0)->default(0);
             $table->decimal('sisa_piutang', 20, 0)->default(0);

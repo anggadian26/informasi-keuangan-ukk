@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
@@ -51,6 +52,8 @@ Route::middleware(['auth'])->group(function () {
     // Penjualan index
     Route::get('/penjualan-data', [PenjualanController::class, 'showData'])->name('index.penjualan');
     Route::get('/transaksi-create', [PenjualanController::class, 'create'])->name('transactionCreate.penjualan');
+    Route::post('/save-transaksi-penjualan', [PenjualanController::class, 'store'])->name('saveTransaction.penjualan');
+    Route::get('/penjualan-detail/{id}', [PenjualanController::class, 'detailData'])->name('penjualanDetail.penjualan');
     // Penjualan Transaksi
     Route::get('/transaksi-penjualan-page', [DetailPenjualanController::class, 'index'])->name('transactionPage.penjualan');
     Route::get('/search-product-penjualan', [DetailPenjualanController::class, 'searchProduct']);
@@ -58,7 +61,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/penjualan-detail-produk/{id}/data', [DetailPenjualanController::class, 'data'])->name('productDetail.pembelian');
     Route::post('/penjualan_quantity/{id}', [DetailPenjualanController::class, 'updateQty']);
     Route::delete('delete-penjualan-detail/{id}', [DetailPenjualanController::class, 'deleteDetailPenjualan']);
-
     Route::get('/transaksi-penjualan-back/{id}', [DetailPenjualanController::class, 'backTransaction'])->name('backTransaction.penjualan');
 
     /* -- FINANSIAL -- */
@@ -97,5 +99,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-supplier-action', [SupplierController::class, 'addSupplierAction'])->name('addAction.supplier');
     Route::get('/edit-supplier/{id}', [SupplierController::class, 'editSupplierPage'])->name('editPage.supplier');
     ROute::post('/edit-supplier-action/{id}', [SupplierController::class, 'editSupplierAction'])->name('editAction.supplier');
+
+    // member
+    Route::get('/member', [MemberController::class, 'showData'])->name('index.member');
+    Route::get('/add-member', [MemberController::class, 'addPage'])->name('addPage.member');
 });
 

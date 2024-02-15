@@ -89,5 +89,11 @@
                 <div data-i18n="Analytics">Supplier</div>
             </a>
         </li>
+        <li class="menu-item {{ request()->routeIs('index.member', 'addPage.member') ? 'active' : '' }}">
+            <a href="{{ route('index.member') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-group"></i>
+                <div data-i18n="Analytics">Member</div>
+            </a>
+        </li>
     </ul>
 </aside>
