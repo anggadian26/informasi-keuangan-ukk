@@ -3,11 +3,15 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
+use App\Http\Controllers\DetailPenjualanController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SubCtgrProductController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UtangController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +49,26 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/save-transaksi-pembelian', [PembelianController::class, 'store'])->name('saveTransaction.pembelian');
     Route::get('/pembelian-detail/{id}', [PembelianController::class, 'detailData'])->name('pembelianDetail.pembelian');
 
+    // Penjualan index
+    Route::get('/penjualan-data', [PenjualanController::class, 'showData'])->name('index.penjualan');
+    Route::get('/transaksi-create', [PenjualanController::class, 'create'])->name('transactionCreate.penjualan');
+    Route::post('/save-transaksi-penjualan', [PenjualanController::class, 'store'])->name('saveTransaction.penjualan');
+    Route::get('/penjualan-detail/{id}', [PenjualanController::class, 'detailData'])->name('penjualanDetail.penjualan');
+    // Penjualan Transaksi
+    Route::get('/transaksi-penjualan-page', [DetailPenjualanController::class, 'index'])->name('transactionPage.penjualan');
+    Route::get('/search-product-penjualan', [DetailPenjualanController::class, 'searchProduct']);
+    Route::post('/store-detail-penjualan', [DetailPenjualanController::class, 'storePenjualanProduct'])->name('storeTransactionDetail.penjualan');
+    Route::get('/penjualan-detail-produk/{id}/data', [DetailPenjualanController::class, 'data'])->name('productDetail.pembelian');
+    Route::post('/penjualan_quantity/{id}', [DetailPenjualanController::class, 'updateQty']);
+    Route::delete('delete-penjualan-detail/{id}', [DetailPenjualanController::class, 'deleteDetailPenjualan']);
+    Route::get('/transaksi-penjualan-back/{id}', [DetailPenjualanController::class, 'backTransaction'])->name('backTransaction.penjualan');
+
+    /* -- FINANSIAL -- */
+    // utang
+    Route::get('/utang-data', [UtangController::class, 'showData'])->name('index.utang');
+    Route::get('/detail-utang/{id}', [UtangController::class, 'detailUtang'])->name('detail.utang');
+    Route::post('/bayar-utang', [UtangController::class, 'bayarUtang'])->name('bayar.utang');
+
     /* -- MASTER -- */ 
     // stok
     Route::get('/stok', [StokController::class, 'showData'])->name('index.stok');
@@ -75,5 +99,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-supplier-action', [SupplierController::class, 'addSupplierAction'])->name('addAction.supplier');
     Route::get('/edit-supplier/{id}', [SupplierController::class, 'editSupplierPage'])->name('editPage.supplier');
     ROute::post('/edit-supplier-action/{id}', [SupplierController::class, 'editSupplierAction'])->name('editAction.supplier');
+
+    // member
+    Route::get('/member', [MemberController::class, 'showData'])->name('index.member');
+    Route::get('/add-member', [MemberController::class, 'addPage'])->name('addPage.member');
 });
 

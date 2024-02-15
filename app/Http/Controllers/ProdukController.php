@@ -107,6 +107,7 @@ class ProdukController extends Controller
             'merek'                 => $val['merek'],
             'product_purcase'       => $val['product_purcase'],
             'product_price'         => $val['product_price'],
+            'diskon'                => 0,
             'status'                => 'Y',
             'record_id'             => $user_id
         ];

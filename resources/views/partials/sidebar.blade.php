@@ -31,10 +31,27 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Transaksi</span>
         </li>
+        <li class="menu-item {{ request()->routeIs('index.penjualan') ? 'active' : '' }}">
+            <a href="{{ route('index.penjualan') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-up-arrow-alt text-success"></i>
+                <div data-i18n="Analytics">Penjualan</div>
+            </a>
+        </li>
         <li class="menu-item {{ request()->routeIs('index.pembelian', 'transactionPage.pembelian') ? 'active' : '' }}">
             <a href="{{ route('index.pembelian') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-down-arrow-alt text-danger"></i>
                 <div data-i18n="Analytics">Pembelian</div>
+            </a>
+        </li>
+
+        {{-- financial --}}
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Finansial</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.utang') ? 'active' : '' }}">
+            <a href="{{ route('index.utang') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                <div data-i18n="Analytics">Utang</div>
             </a>
         </li>
 
@@ -70,6 +87,12 @@
             <a href="{{ route('index.supplier') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-truck"></i>
                 <div data-i18n="Analytics">Supplier</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.member', 'addPage.member') ? 'active' : '' }}">
+            <a href="{{ route('index.member') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-group"></i>
+                <div data-i18n="Analytics">Member</div>
             </a>
         </li>
     </ul>

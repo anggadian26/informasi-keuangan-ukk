@@ -11,16 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pembelian', function (Blueprint $table) {
-            $table->id('pembelian_id');
+        Schema::create('penjualan', function (Blueprint $table) {
+            $table->id('penjualan_id');
             $table->bigInteger('nota')->unique();
-            $table->foreignId('supplier_id');
-            $table->date('tanggal_pembelian');
-            $table->enum('jenis_pembelian', ['cash', 'credit']);
+            $table->date('tanggal_penjualan');
+            $table->enum('jenis_transaksi', ['cash', 'credit']);
+            $table->enum('flg_member', ['Y', 'N']);
+            $table->foreignId('member_id')->nullable();
             $table->integer('total_item');
             $table->decimal('total_harga', 20, 0)->default(0);
             $table->tinyInteger('diskon')->default(0);
-            $table->decimal('total_bayar', 20, 0)->default(0);
+            $table->decimal('harga_akhir', 20, 0)->default(0);
+            $table->decimal('bayar', 20, 0);
+            $table->decimal('kembalian', 20, 0);
             $table->enum('status_pembayaran', ['L', 'U']);
             $table->text('catatan')->nullable();
             $table->foreignId('record_id');
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembelian');
+        Schema::dropIfExists('penjualan');
     }
 };
