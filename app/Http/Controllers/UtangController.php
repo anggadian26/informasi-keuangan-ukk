@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailUtangModel;
 use App\Models\PembelianModel;
+use App\Models\PengeluaranModel;
 use App\Models\UtangModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class UtangController extends Controller
 
         $queryCount = "
             SELECT COUNT(1) AS totalData
-            FROM pembelian    
+            FROM utang    
         ";
 
         $total = DB::select($queryCount);
@@ -106,6 +107,15 @@ class UtangController extends Controller
                 'status_pembayaran' => 'L'
             ]);
         }
+
+        $dataPengeluaran = [
+            'jenis_pengeluaran'     => 'P',
+            'tanggal_pengeluaran'   => Carbon::now()->toDateString(),
+            'total_nominal'         => $val['bayar'],
+            'keterangan'            => 'Pembayaran Credit'
+        ]; 
+
+        PengeluaranModel::create($dataPengeluaran);
 
 
         return redirect()->route('index.utang')->with('toast_success', 'Pembayaran utang telah sukses!');
