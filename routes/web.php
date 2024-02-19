@@ -4,9 +4,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
+use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PemasukkanController;
 use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SubCtgrProductController;
@@ -63,13 +67,28 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('delete-penjualan-detail/{id}', [DetailPenjualanController::class, 'deleteDetailPenjualan']);
     Route::get('/transaksi-penjualan-back/{id}', [DetailPenjualanController::class, 'backTransaction'])->name('backTransaction.penjualan');
 
+    // Pemasukkan
+    Route::get('/pemasukkan-data', [PemasukkanController::class, 'showData'])->name('index.pemasukkan');
+
+    // pengeluaran 
+    Route::get('/pengeluaran-data', [PengeluaranController::class, 'showData'])->name('index.pengeluaran');
+
     /* -- FINANSIAL -- */
+    // Piutang
+    Route::get('/piutang-data', [PiutangController::class, 'showData'])->name('index.piutang');
+    Route::get('/detail-piutang/{id}', [PiutangController::class, 'detailPiutang'])->name('detail.piutang');
+    Route::post('/bayar-piutang', [PiutangController::class, 'bayarPiutang'])->name('bayar.piutang');
     // utang
     Route::get('/utang-data', [UtangController::class, 'showData'])->name('index.utang');
     Route::get('/detail-utang/{id}', [UtangController::class, 'detailUtang'])->name('detail.utang');
     Route::post('/bayar-utang', [UtangController::class, 'bayarUtang'])->name('bayar.utang');
 
     /* -- MASTER -- */ 
+
+    // Diskon
+    Route::get('/diskon', [DiskonController::class, 'showData'])->name('index.diskon');
+    Route::post('/diskon-update/{id}', [DiskonController::class, 'ubahDiskon'])->name('store.diskon');
+
     // stok
     Route::get('/stok', [StokController::class, 'showData'])->name('index.stok');
 

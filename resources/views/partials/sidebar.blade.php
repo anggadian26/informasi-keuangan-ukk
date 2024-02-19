@@ -43,10 +43,28 @@
                 <div data-i18n="Analytics">Pembelian</div>
             </a>
         </li>
+        <li class="menu-item {{ request()->routeIs('index.pemasukkan') ? 'active' : '' }}">
+            <a href="{{ route('index.pemasukkan') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-trending-up"></i>
+                <div data-i18n="Analytics">Pemasukkan</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.pengeluaran') ? 'active' : '' }}">
+            <a href="{{ route('index.pengeluaran') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-trending-down"></i>
+                <div data-i18n="Analytics">Pengeluaran</div>
+            </a>
+        </li>
 
         {{-- financial --}}
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Finansial</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.piutang') ? 'active' : '' }}">
+            <a href="{{ route('index.piutang') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                <div data-i18n="Analytics">Piutang</div>
+            </a>
         </li>
         <li class="menu-item {{ request()->routeIs('index.utang') ? 'active' : '' }}">
             <a href="{{ route('index.utang') }}" class="menu-link">
@@ -58,6 +76,12 @@
         {{-- Master --}}
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Master</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.diskon') ? 'active' : '' }}">
+            <a href="{{ route('index.diskon') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-discount"></i>
+                <div data-i18n="Analytics">Diskon</div>
+            </a>
         </li>
         <li class="menu-item {{ request()->routeIs('index.stok') ? 'active' : '' }}">
             <a href="{{ route('index.stok') }}" class="menu-link">
