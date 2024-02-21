@@ -7,6 +7,7 @@ use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\LaporanPemasukkanController;
 use App\Http\Controllers\LaporanPembelianController;
+use App\Http\Controllers\LaporanPengeluaranController;
 use App\Http\Controllers\LaporanPenjualan;
 use App\Http\Controllers\LaporanPenjualanController;
 use App\Http\Controllers\MemberController;
@@ -98,6 +99,9 @@ Route::middleware(['auth'])->group(function () {
     // laporan pemasukka
     Route::get('/laporan-pemasukkan', [LaporanPemasukkanController::class, 'index'])->name('index.laporanPemasukkan');
     Route::post('/laporan-pemasukkan/download', [LaporanPemasukkanController::class, 'downloadLaporan'])->name('download.laporanPemasukkan');
+    // laporan pengeluaran
+    Route::get('/laporan-pengeluaran', [LaporanPengeluaranController::class, 'index'])->name('index.laporanPengeluaran');
+    Route::post('/laporan-pengeluaran/download', [LaporanPengeluaranController::class, 'downloadLaporan'])->name('download.laporanPengeluaran');
 
     /* -- MASTER -- */ 
     // Diskon
