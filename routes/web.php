@@ -5,6 +5,8 @@ use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DiskonController;
+use App\Http\Controllers\LaporanPenjualan;
+use App\Http\Controllers\LaporanPenjualanController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PemasukkanController;
 use App\Http\Controllers\PembelianController;
@@ -83,8 +85,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/detail-utang/{id}', [UtangController::class, 'detailUtang'])->name('detail.utang');
     Route::post('/bayar-utang', [UtangController::class, 'bayarUtang'])->name('bayar.utang');
 
-    /* -- MASTER -- */ 
+    /* -- LAPORAN -- */
+    // laporan penjualan
+    Route::get('/laporan-penjualan', [LaporanPenjualanController::class, 'index'])->name('index.laporanPenjualan');
+    Route::post('laporan-penjualan/filter', [LaporanPenjualanController::class, 'filterPdf'])->name('download.laporanPenjualan');
+    Route::get('/laporan-penjualan/pdf', [LaporanPenjualanController::class, 'downloadPdf']);
+    // laporan pembelian
 
+    /* -- MASTER -- */ 
     // Diskon
     Route::get('/diskon', [DiskonController::class, 'showData'])->name('index.diskon');
     Route::post('/diskon-update/{id}', [DiskonController::class, 'ubahDiskon'])->name('store.diskon');

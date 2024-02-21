@@ -55,6 +55,12 @@
                 <div data-i18n="Analytics">Pengeluaran</div>
             </a>
         </li>
+        <li class="menu-item {{ request()->routeIs('') ? 'active' : '' }}">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-rotate-right"></i>
+                <div data-i18n="Analytics">Return Barang</div>
+            </a>
+        </li>
 
         {{-- financial --}}
         <li class="menu-header small text-uppercase">
@@ -70,6 +76,41 @@
             <a href="{{ route('index.utang') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-credit-card"></i>
                 <div data-i18n="Analytics">Utang</div>
+            </a>
+        </li>
+
+        {{-- Laporan --}}
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Laporan</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('index.laporanPenjualan') ? 'active' : '' }}">
+            <a href="{{ route('index.laporanPenjualan') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-report"></i>
+                <div data-i18n="Analytics">Laporan Penjualan</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('') ? 'active' : '' }}">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-report"></i>
+                <div data-i18n="Analytics">Laporan Pembelian</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('') ? 'active' : '' }}">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-report"></i>
+                <div data-i18n="Analytics">Laporan Pemasukkan</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('') ? 'active' : '' }}">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-report"></i>
+                <div data-i18n="Analytics">Laporan Pengeluaran</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('') ? 'active' : '' }}">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-report"></i>
+                <div data-i18n="Analytics">Laporan Laba Rugi</div>
             </a>
         </li>
 
