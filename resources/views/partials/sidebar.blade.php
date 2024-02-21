@@ -55,8 +55,8 @@
                 <div data-i18n="Analytics">Pengeluaran</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->routeIs('') ? 'active' : '' }}">
-            <a href="" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('index.returnBarang') ? 'active' : '' }}">
+            <a href="{{ route('index.returnBarang') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-rotate-right"></i>
                 <div data-i18n="Analytics">Return Barang</div>
             </a>

@@ -18,6 +18,7 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\ReturnBarangController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SubCtgrProductController;
 use App\Http\Controllers\SupplierController;
@@ -79,6 +80,9 @@ Route::middleware(['auth'])->group(function () {
     // pengeluaran 
     Route::get('/pengeluaran-data', [PengeluaranController::class, 'showData'])->name('index.pengeluaran');
 
+    // return barang
+    Route::get('/return-barang', [ReturnBarangController::class, 'showData'])->name('index.returnBarang');
+
     /* -- FINANSIAL -- */
     // Piutang
     Route::get('/piutang-data', [PiutangController::class, 'showData'])->name('index.piutang');
@@ -106,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
     // laporan laba-rugi
     Route::get('/laporan-labarugi', [LaporanLabaRugiController::class, 'index'])->name('index.laporanLabaRugi');
     Route::post('/laporan-labarugi/download', [LaporanLabaRugiController::class, 'downloadLaporan'])->name('download.laporanLabaRugi');
-
+    // laporan stok
     Route::get('/laporan-stok-download', [StokController::class, 'downloadLaporan'])->name('download.stokLaporan');
 
     /* -- MASTER -- */ 
