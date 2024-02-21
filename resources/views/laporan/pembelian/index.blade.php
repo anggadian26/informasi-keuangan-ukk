@@ -8,7 +8,7 @@
 @section('content')
     <div class="card p-3">
         <div class="container-view">
-            <form action="" method="POST">
+            <form action="{{ route('download.laporanPembelian') }}" method="POST">
                 @csrf
                 <input type="hidden" name="action" id="action">
                 <div class="row justify-content-start mb-3">

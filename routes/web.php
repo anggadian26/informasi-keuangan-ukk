@@ -5,6 +5,7 @@ use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DiskonController;
+use App\Http\Controllers\LaporanPembelianController;
 use App\Http\Controllers\LaporanPenjualan;
 use App\Http\Controllers\LaporanPenjualanController;
 use App\Http\Controllers\MemberController;
@@ -91,6 +92,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('laporan-penjualan/filter', [LaporanPenjualanController::class, 'filterPdf'])->name('download.laporanPenjualan');
     Route::get('/laporan-penjualan/pdf', [LaporanPenjualanController::class, 'downloadPdf']);
     // laporan pembelian
+    Route::get('/laporan-pembelian', [LaporanPembelianController::class, 'index'])->name('index.laporanPembelian');
+    Route::post('/laporan-pembelian/download', [LaporanPembelianController::class, 'downloadLaporan'])->name('download.laporanPembelian');
 
     /* -- MASTER -- */ 
     // Diskon
