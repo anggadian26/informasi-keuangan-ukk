@@ -95,8 +95,8 @@
                 <div data-i18n="Analytics">Laporan Pembelian</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->routeIs('') ? 'active' : '' }}">
-            <a href="" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('index.laporanPemasukkan') ? 'active' : '' }}">
+            <a href="{{ route('index.laporanPemasukkan') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-report"></i>
                 <div data-i18n="Analytics">Laporan Pemasukkan</div>
             </a>

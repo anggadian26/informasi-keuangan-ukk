@@ -5,6 +5,7 @@ use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DiskonController;
+use App\Http\Controllers\LaporanPemasukkanController;
 use App\Http\Controllers\LaporanPembelianController;
 use App\Http\Controllers\LaporanPenjualan;
 use App\Http\Controllers\LaporanPenjualanController;
@@ -94,6 +95,9 @@ Route::middleware(['auth'])->group(function () {
     // laporan pembelian
     Route::get('/laporan-pembelian', [LaporanPembelianController::class, 'index'])->name('index.laporanPembelian');
     Route::post('/laporan-pembelian/download', [LaporanPembelianController::class, 'downloadLaporan'])->name('download.laporanPembelian');
+    // laporan pemasukka
+    Route::get('/laporan-pemasukkan', [LaporanPemasukkanController::class, 'index'])->name('index.laporanPemasukkan');
+    Route::post('/laporan-pemasukkan/download', [LaporanPemasukkanController::class, 'downloadLaporan'])->name('download.laporanPemasukkan');
 
     /* -- MASTER -- */ 
     // Diskon
