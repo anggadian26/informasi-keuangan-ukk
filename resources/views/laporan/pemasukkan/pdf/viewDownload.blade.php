@@ -89,7 +89,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-black fw-bold">Laporan Pemasukkan</h2>
+                <h2 class="text-black fw-bold">Laporan <span style="color: #34A7F5">Pemasukkan</span> </h2>
                 <h4 class="text-black fw-bold">Periode {{ $parameter }}</h4>
             </div>
             <div class="col-12">

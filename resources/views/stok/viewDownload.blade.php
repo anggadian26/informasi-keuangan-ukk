@@ -6,15 +6,15 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>komobox | Laporan Penjualan</title>
+    <title>komobox | Laporan Stok</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
-        /* Tambahkan gaya CSS Anda di sini */
-
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
         }
 
         .container {
@@ -40,13 +40,14 @@
         }
 
         .fs-5 {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
+            /* Ukuran font yang lebih kecil */
         }
 
         .mb-4 {
             margin-bottom: 1rem;
         }
-        
+
 
         .table {
             width: 100%;
@@ -59,9 +60,12 @@
 
         .table th,
         .table td {
-            padding: 0.75rem;
+            padding: 0.5rem;
+            /* Ukuran padding yang lebih kecil */
             vertical-align: top;
             border-top: 1px solid #dee2e6;
+            font-size: 0.9rem;
+            /* Ukuran font yang lebih kecil */
         }
 
         .table-bordered th,
@@ -87,42 +91,42 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center mb-4">
-                <h2 class="text-black fw-bold">Laporan <span style="color: #34A7F5">Penjualan</span></h2>
-                <h4 class="text-black fw-bold">Periode {{ $parameter }}</h4>
+            <div class="col-12 text-center mb-5">
+                <h2 class="text-black fw-bold">Laporan <span style="color: #34A7F5">Stok</span></h2>
+                <h4 class="text-black fw-bold">{{ $parameter }}</h4>
             </div>
         </div>
-        <div class="text-nowrap">
-            <table class="table table-bordered table-striped">
-                <thead class="bg-primary">
+        <div class="row">
+            <table class="table table-bordered">
+                <thead style="background-color: #C3CEF4 !important;">
                     <tr>
                         <th><strong>No</strong></th>
-                        <th><strong>Tanggal</strong></th>
-                        <th><strong>No Nota</strong></th>
-                        <th><strong>Jenis Transaksi</strong></th>
-                        <th><strong>Total Item</strong></th>
-                        <th><strong>Total Harga</strong></th>
-                        <th><strong>Status</strong></th>
-                        <th><strong>Admin</strong></th>
+                        <th><strong>Kode Produk</strong></th>
+                        <th><strong>Nama Produk</strong></th>
+                        <th><strong>Stok</strong></th>
+                        <th><strong>Update Terakhir</strong></th>
                     </tr>
                 </thead>
-                <tbody class="table-border-bottom-0">
-                    @foreach ($data as $key => $i)
+                <tbody>
+                    @foreach ($data as $key => $i)    
+                    <tr>
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $i->tanggal_penjualan }}</td>
-                            <td>{{ $i->nota }}</td>
-                            <td>{{ $i->jenis_transaksi }}</td>
-                            <td>{{ $i->total_item }}</td>
-                            <td>Rp {{ number_format($i->total_harga, 0, ',', '.') }}</td>
-                            <td>{{ $i->status_pembayaran == 'L' ? 'Lunas' : 'Belum Lunas' }}</td>
-                            <td>{{ $i->name }}</td>
-                        </tr>
+                            <td>{{ $i->product_code }}</td>
+                            <td>{{ $i->product_name }}</td>
+                            <td>{{ $i->total_stok }}</td>
+                            <td>{{ $i->update_stok_date }}</td>
+                        </tr> 
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

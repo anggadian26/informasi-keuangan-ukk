@@ -107,6 +107,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan-labarugi', [LaporanLabaRugiController::class, 'index'])->name('index.laporanLabaRugi');
     Route::post('/laporan-labarugi/download', [LaporanLabaRugiController::class, 'downloadLaporan'])->name('download.laporanLabaRugi');
 
+    Route::get('/laporan-stok-download', [StokController::class, 'downloadLaporan'])->name('download.stokLaporan');
+
     /* -- MASTER -- */ 
     // Diskon
     Route::get('/diskon', [DiskonController::class, 'showData'])->name('index.diskon');

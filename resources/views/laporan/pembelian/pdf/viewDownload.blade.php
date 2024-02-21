@@ -89,7 +89,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mb-4">
-                <h2 class="text-black fw-bold">Laporan Pembelian</h2>
+                <h2 class="text-black fw-bold">Laporan <span style="color: #34A7F5">Pembelian</span> </h2>
                 <h4 class="text-black fw-bold">Periode {{ $parameter }}</h4>
             </div>
         </div>
