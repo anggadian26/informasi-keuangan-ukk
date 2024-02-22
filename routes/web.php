@@ -5,6 +5,7 @@ use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DiskonController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LaporanLabaRugiController;
 use App\Http\Controllers\LaporanPemasukkanController;
 use App\Http\Controllers\LaporanPembelianController;
@@ -41,9 +42,10 @@ Route::post('/login-action', [Controller::class, 'loginAction'])->name('loginAct
 Route::get('/log-out', [Controller::class, 'logOut'])->name('log-out');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('welcome');
+    // Route::get('/', function () {
+    //     return view('welcome');
+    // })->name('welcome');
+    Route::get('/', [HomeController::class, 'basePage'])->name('welcome');
 
     /* -- TRANSAKSI -- */
     // pembelian
