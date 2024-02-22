@@ -150,11 +150,17 @@
                 method: "GET",
                 success: function(response) {
                     console.log(response);
+                    let catatan = '';
+                    if(response.penjualan[0].catatan != null) {
+                        catatan = response.penjualan[0].catatan;
+                    } else {
+                        catatan = '';
+                    }
                     $('#notavalue').text(': ' + response.penjualan[0].nota);
                     $('#authorBy').text( ': ' + response.penjualan[0].name);
                     $('#bayarValue').text( ': Rp.' + formatCurrency(response.penjualan[0].bayar));
                     $('#kembalianValue').text( ': Rp.' + formatCurrency(response.penjualan[0].kembalian));
-                    $('#catatanValue').text( ': ' + response.penjualan[0].catatan);
+                    $('#catatanValue').text( ': ' + catatan);
                     var detailData = response.detail;
                     var tableBody = $('#table-detail tbody');
 

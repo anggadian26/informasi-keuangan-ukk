@@ -7,6 +7,9 @@
 @endsection
 @section('content')
     <div class="card p-3">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{{ route('download.stokLaporan') }}" class="btn btn-success">Download Laporan Stok</a>
+        </div>
         <form action="#" method="get" class="mb-3 mt-3">
             @csrf
             <div class="row mb-3">

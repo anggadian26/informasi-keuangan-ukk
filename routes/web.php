@@ -5,6 +5,12 @@ use App\Http\Controllers\CtgrProdukController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DiskonController;
+use App\Http\Controllers\LaporanLabaRugiController;
+use App\Http\Controllers\LaporanPemasukkanController;
+use App\Http\Controllers\LaporanPembelianController;
+use App\Http\Controllers\LaporanPengeluaranController;
+use App\Http\Controllers\LaporanPenjualan;
+use App\Http\Controllers\LaporanPenjualanController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PemasukkanController;
 use App\Http\Controllers\PembelianController;
@@ -12,6 +18,7 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\ReturnBarangController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SubCtgrProductController;
 use App\Http\Controllers\SupplierController;
@@ -73,6 +80,9 @@ Route::middleware(['auth'])->group(function () {
     // pengeluaran 
     Route::get('/pengeluaran-data', [PengeluaranController::class, 'showData'])->name('index.pengeluaran');
 
+    // return barang
+    Route::get('/return-barang', [ReturnBarangController::class, 'showData'])->name('index.returnBarang');
+
     /* -- FINANSIAL -- */
     // Piutang
     Route::get('/piutang-data', [PiutangController::class, 'showData'])->name('index.piutang');
@@ -83,8 +93,27 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/detail-utang/{id}', [UtangController::class, 'detailUtang'])->name('detail.utang');
     Route::post('/bayar-utang', [UtangController::class, 'bayarUtang'])->name('bayar.utang');
 
-    /* -- MASTER -- */ 
+    /* -- LAPORAN -- */
+    // laporan penjualan
+    Route::get('/laporan-penjualan', [LaporanPenjualanController::class, 'index'])->name('index.laporanPenjualan');
+    Route::post('laporan-penjualan/filter', [LaporanPenjualanController::class, 'filterPdf'])->name('download.laporanPenjualan');
+    Route::get('/laporan-penjualan/pdf', [LaporanPenjualanController::class, 'downloadPdf']);
+    // laporan pembelian
+    Route::get('/laporan-pembelian', [LaporanPembelianController::class, 'index'])->name('index.laporanPembelian');
+    Route::post('/laporan-pembelian/download', [LaporanPembelianController::class, 'downloadLaporan'])->name('download.laporanPembelian');
+    // laporan pemasukka
+    Route::get('/laporan-pemasukkan', [LaporanPemasukkanController::class, 'index'])->name('index.laporanPemasukkan');
+    Route::post('/laporan-pemasukkan/download', [LaporanPemasukkanController::class, 'downloadLaporan'])->name('download.laporanPemasukkan');
+    // laporan pengeluaran
+    Route::get('/laporan-pengeluaran', [LaporanPengeluaranController::class, 'index'])->name('index.laporanPengeluaran');
+    Route::post('/laporan-pengeluaran/download', [LaporanPengeluaranController::class, 'downloadLaporan'])->name('download.laporanPengeluaran');
+    // laporan laba-rugi
+    Route::get('/laporan-labarugi', [LaporanLabaRugiController::class, 'index'])->name('index.laporanLabaRugi');
+    Route::post('/laporan-labarugi/download', [LaporanLabaRugiController::class, 'downloadLaporan'])->name('download.laporanLabaRugi');
+    // laporan stok
+    Route::get('/laporan-stok-download', [StokController::class, 'downloadLaporan'])->name('download.stokLaporan');
 
+    /* -- MASTER -- */ 
     // Diskon
     Route::get('/diskon', [DiskonController::class, 'showData'])->name('index.diskon');
     Route::post('/diskon-update/{id}', [DiskonController::class, 'ubahDiskon'])->name('store.diskon');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\StokModel;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,5 +37,24 @@ class StokController extends Controller
         $total = DB::select($queryCount);
 
         return view('stok.index', compact(['stok', 'total']));
+    }
+
+    public function downloadLaporan() {
+        Carbon::setLocale('id');
+        $tanggal_hariIni = Carbon::now();
+        $parameter = $tanggal_hariIni->translatedFormat('d F Y');
+
+        $query = "
+            SELECT A.*, B.product_code, B.product_name
+            FROM stok A
+            INNER JOIN product B ON A.product_id = B.product_id
+            ORDER BY B.product_code, B.product_name
+        ";
+
+        $data = DB::select($query);
+        $pdf = Pdf::loadView("stok.viewDownload", compact('data', 'parameter'));
+        $pdf->setPaper("a4", "potrait");
+            
+        return $pdf->download('laporan-stok-'. $tanggal_hariIni . '.pdf');
     }
 }
