@@ -1,5 +1,5 @@
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="" />
+<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/finance.png') }}" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
