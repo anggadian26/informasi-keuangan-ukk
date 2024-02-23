@@ -8,7 +8,9 @@
             <div class="modal-body">
                 <div class="row d-flex justify-content-end">
                     <div class="col-2">
+                        @if ($loggedInUser->role->role == 'manager' || $loggedInUser->role->role == 'admin')
                         <button class="btn btn-primary ms-4 mb-3 mt-0 ps-5 pe-5" onclick="bayar()">Bayar</button>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-xl-scroll">

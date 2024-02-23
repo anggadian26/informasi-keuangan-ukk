@@ -7,10 +7,12 @@
 @endsection
 @section('content')
     <div class="card p-3">
+        @if ($loggedInUser->role->role == 'manager')
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <a href="{{ route('addPage.supplier') }}" class="btn btn-primary">Tambah
                 Data</a>
         </div>
+        @endif
         <form action="#" method="get" class="mb-3 mt-3">
             @csrf
             <div class="row mb-3">
@@ -71,10 +73,12 @@
                                                 data-bs-target="#detailSupplier{{ $i->supplier_id }}"><i
                                                     class="bx bx-detail me-1"></i>
                                                 Detail</a>
+                                            @if ($loggedInUser->role->role == 'manager')
                                             <a class="dropdown-item"
                                                 href="{{ route('editPage.supplier', ['id' => $i->supplier_id]) }}"><i
                                                     class="bx bx-edit-alt me-1"></i>
                                                 Edit</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>

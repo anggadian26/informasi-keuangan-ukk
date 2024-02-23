@@ -21,10 +21,16 @@
                                 <td>Catatan</td>
                                 <td class="fw-bold" id="catatan"></td>
                             </tr>
+                            <tr>
+                                <td>Uang Muka</td>
+                                <td class="fw-bold" id="uangMuka"></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="col-2">
+                        @if ($loggedInUser->role->role == 'manager' || $loggedInUser->role->role == 'admin')
                         <button class="btn btn-primary ms-4 mb-3 mt-0 ps-5 pe-5" onclick="bayar()">Bayar</button>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-xl-scroll">

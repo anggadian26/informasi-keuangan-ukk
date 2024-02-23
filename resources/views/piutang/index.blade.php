@@ -44,7 +44,6 @@
                         <th><strong>No Nota</strong></th>
                         <th><strong>Nama Pelanggan</strong></th>
                         <th><strong>Total Piutang</strong></th>
-                        <th><strong>Uang Muka</strong></th>
                         <th><strong>Sisa Piutang</strong></th>
                         <th><strong>Tanggal Jatuh Tempo</strong></th>
                         <th><strong>Status</strong></th>
@@ -63,7 +62,6 @@
                                 <td><span class="badge bg-primary">{{ $i->nota }}</span></td>
                                 <td><span class="fw-bold">{{ $i->nama_customer }}</span></td>
                                 <td>Rp {{ number_format($i->total_harga, 0, ',', '.') }}</td>
-                                <td>Rp {{ number_format($i->uang_muka, 0, ',', '.') }}</td>
                                 <td>Rp {{ number_format($i->sisa_piutang, 0, ',', '.') }}</td>
                                 <td>{{ $i->tanggal_jatuh_tempo }}</td>
                                 <td>
@@ -141,6 +139,7 @@
 
                     $('#nama_customer').text(': ' + response.piutang_base.nama_customer);
                     $('#alamat_customer').text(': ' + response.piutang_base.alamat_customer);
+                    $('#uangMuka').text(': Rp' + formatCurrency(response.piutang_base.uang_muka));
                     $('#catatan').text(': ' + catatan);
                     tableBody.empty();
 

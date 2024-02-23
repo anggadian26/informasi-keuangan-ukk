@@ -7,10 +7,12 @@
 @endsection
 @section('content')
     <div class="card p-3">
+        @if ($loggedInUser->role->role == 'manager')
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <a href="{{ route('addPage.product') }}" class="btn btn-primary">Tambah
                 Data</a>
         </div>
+        @endif
         <form action="#" method="get" class="mb-3 mt-3">
             @csrf
             <div class="row mb-3">
@@ -88,6 +90,7 @@
                                             <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                                                 data-bs-target="#detailProduct{{ $i->product_id }}"><i class="bx bx-detail me-1"></i>
                                                 Detail</a>
+                                            @if ($loggedInUser->role->role == 'manager')
                                             <a class="dropdown-item" href="{{ route('editPage.product', ['id' => $i->product_id]) }}"><i
                                                     class="bx bx-edit-alt me-1"></i>
                                                 Edit</a>
@@ -95,6 +98,7 @@
                                             data-bs-target="#delProduct{{ $i->product_id }}" ><i
                                                     class="bx bx-trash me-1"></i>
                                                 Delete</a>
+                                            @endif
                                         </div>
                                 </td>
                                 <td>{{ $i->product_code }}</td>
