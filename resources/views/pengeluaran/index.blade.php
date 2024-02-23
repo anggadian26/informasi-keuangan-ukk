@@ -11,7 +11,7 @@
             @csrf
             <div class="row mb-3">
                 <div class="col-md-2">
-                    <label for="" class="fw-bold">Tanggal Pemasukkan</label>
+                    <label for="" class="fw-bold">Tanggal Pengeluaran</label>
                     <input name="tanggal" type="date" class="form-control" placeholder="Tanggal"
                         value="{{ isset($_GET['tanggal']) ? $_GET['tanggal'] : '' }}">
                 </div>
@@ -24,7 +24,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th><strong>Tanggal Pemasukkan</strong></th>
+                        <th><strong>Tanggal Pengeluaran</strong></th>
                         <th><strong>Nominal</strong></th>
                         <th><strong>Keterangan</strong></th>
                     </tr>

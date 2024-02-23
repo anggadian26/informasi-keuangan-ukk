@@ -51,7 +51,7 @@
                 </div>
             </div>
         </form>
-        <div class="text-nowrap">
+        <div class="text-nowrap table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>

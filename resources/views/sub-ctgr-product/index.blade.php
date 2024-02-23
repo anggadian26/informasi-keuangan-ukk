@@ -8,12 +8,14 @@
 
 @section('content')
     <div class="card p-3">
+        @if ($loggedInUser->role->role == 'manager')
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSubCtgrProduct">
                 Tambah Data
             </button>
             @include('sub-ctgr-product.modal.modalAddSubCtgr')
-        </div>
+        </div>            
+        @endif
         <form action="#" method="get" class="mb-3">
             @csrf
             <div class="row mb-3">
@@ -88,6 +90,7 @@
                                                 data-bs-target="#detailSubCtgrProduct{{ $i->sub_ctgr_product_id }}"><i
                                                     class="bx bx-detail me-1 text-primary"></i>
                                                 Detail</a>
+                                            @if ($loggedInUser->role->role == 'manager')
                                             <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                                                 data-bs-target="#editSubCtgrProduct{{ $i->sub_ctgr_product_id }}"><i
                                                     class="bx bx-edit-alt me-1 text-warning"></i>
@@ -96,6 +99,7 @@
                                                 data-bs-target="#delSubCtgrProduct{{ $i->sub_ctgr_product_id }}"><i
                                                     class="bx bx-trash-alt me-1 text-danger"></i>
                                                 Hapus</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>

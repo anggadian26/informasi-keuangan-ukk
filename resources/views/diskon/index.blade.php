@@ -34,7 +34,9 @@
                         <th><strong>Nama Produk</strong></th>
                         <th><strong>Harga Jual</strong></th>
                         <th><strong>Diskon</strong></th>
+                        @if ($loggedInUser->role->role == 'manager')
                         <th><strong>Aksi</strong></th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -50,8 +52,10 @@
                                 <td>{{ $i->product_name }}</td>
                                 <td>Rp {{ number_format($i->product_price, 0, ',', '.') }}</td>
                                 <td class="fw-bold">{{ $i->diskon }}%</td>
+                                @if ($loggedInUser->role->role == 'manager')
                                 <td><button class="btn-sm btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#modalUbahDiskon{{ $i->product_id }}">Ubah Diskon</button></td>
+                                @endif
                             </tr> 
                         @endforeach
                     @endif

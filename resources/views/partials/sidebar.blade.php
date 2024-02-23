@@ -31,18 +31,20 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Transaksi</span>
         </li>
-        <li class="menu-item {{ request()->routeIs('index.penjualan') ? 'active' : '' }}">
-            <a href="{{ route('index.penjualan') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-up-arrow-alt text-success"></i>
-                <div data-i18n="Analytics">Penjualan</div>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->routeIs('index.pembelian', 'transactionPage.pembelian') ? 'active' : '' }}">
-            <a href="{{ route('index.pembelian') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-down-arrow-alt text-danger"></i>
-                <div data-i18n="Analytics">Pembelian</div>
-            </a>
-        </li>
+        @if ($loggedInUser->role->role == 'admin' || $loggedInUser->role->role == 'manager')
+            <li class="menu-item {{ request()->routeIs('index.penjualan') ? 'active' : '' }}">
+                <a href="{{ route('index.penjualan') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-up-arrow-alt text-success"></i>
+                    <div data-i18n="Analytics">Penjualan</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->routeIs('index.pembelian', 'transactionPage.pembelian') ? 'active' : '' }}">
+                <a href="{{ route('index.pembelian') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-down-arrow-alt text-danger"></i>
+                    <div data-i18n="Analytics">Pembelian</div>
+                </a>
+            </li>
+        @endif
         <li class="menu-item {{ request()->routeIs('index.pemasukkan') ? 'active' : '' }}">
             <a href="{{ route('index.pemasukkan') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-trending-up"></i>
@@ -55,12 +57,14 @@
                 <div data-i18n="Analytics">Pengeluaran</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->routeIs('index.returnBarang') ? 'active' : '' }}">
-            <a href="{{ route('index.returnBarang') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-rotate-right"></i>
-                <div data-i18n="Analytics">Return Barang</div>
-            </a>
-        </li>
+        @if ($loggedInUser->role->role == 'admin' || $loggedInUser->role->role == 'manager')
+            <li class="menu-item {{ request()->routeIs('index.returnBarang') ? 'active' : '' }}">
+                <a href="{{ route('index.returnBarang') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-rotate-right"></i>
+                    <div data-i18n="Analytics">Return Barang</div>
+                </a>
+            </li>
+        @endif
 
         {{-- financial --}}
         <li class="menu-header small text-uppercase">
