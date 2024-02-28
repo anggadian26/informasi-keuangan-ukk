@@ -84,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
 
     // return barang
     Route::get('/return-barang', [ReturnBarangController::class, 'showData'])->name('index.returnBarang');
+    Route::post('/return-barang-cek-nota', [ReturnBarangController::class, 'cekNota'])->name('cekNota.returnBarang');
+    Route::post('/return-barang-action', [ReturnBarangController::class, 'returnAction'])->name('returnAction.returnBarang');
 
     /* -- FINANSIAL -- */
     // Piutang
