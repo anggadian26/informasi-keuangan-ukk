@@ -168,7 +168,7 @@
 
                     if (detailData.length > 0) {
                         $.each(detailData, function(index, detail) {
-                            var returnSpan = detail.flg_return ? ' <span class="text-warning"> [return]</span>' : '';
+                            var returnSpan = detail.flg_return === 'Y' ? ' <span class="text-warning"> [return]</span>' : '';
                             var newRow = '<tr>' +
                                 '<td>' + detail.product_code + '</td>' +
                                 '<td>' + detail.product_name + returnSpan + '</td>' +
