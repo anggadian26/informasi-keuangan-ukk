@@ -6,6 +6,7 @@ use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InfoStokController;
 use App\Http\Controllers\LaporanLabaRugiController;
 use App\Http\Controllers\LaporanPemasukkanController;
 use App\Http\Controllers\LaporanPembelianController;
@@ -42,9 +43,6 @@ Route::post('/login-action', [Controller::class, 'loginAction'])->name('loginAct
 Route::get('/log-out', [Controller::class, 'logOut'])->name('log-out');
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/', function () {
-    //     return view('welcome');
-    // })->name('welcome');
     Route::get('/', [HomeController::class, 'basePage'])->name('welcome');
 
     /* -- TRANSAKSI -- */
@@ -86,6 +84,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/return-barang', [ReturnBarangController::class, 'showData'])->name('index.returnBarang');
     Route::post('/return-barang-cek-nota', [ReturnBarangController::class, 'cekNota'])->name('cekNota.returnBarang');
     Route::post('/return-barang-action', [ReturnBarangController::class, 'returnAction'])->name('returnAction.returnBarang');
+
+    // info stok
+    Route::get('/informasi-stok', [InfoStokController::class, 'showData'])->name('index.infoStok');
+    Route::get('/detail-informasi-stok/{id}/{flg}', [InfoStokController::class, 'detailDataStok'])->name('detail.infoStok');
 
     /* -- FINANSIAL -- */
     // Piutang
