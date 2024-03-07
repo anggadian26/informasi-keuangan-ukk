@@ -168,11 +168,12 @@
 
                     if (detailData.length > 0) {
                         $.each(detailData, function(index, detail) {
+                            var returnSpan = detail.flg_return === 'Y' ? ' <span class="text-warning"> [return]</span>' : '';
                             var newRow = '<tr>' +
                                 '<td>' + detail.product_code + '</td>' +
-                                '<td>' + detail.product_name + '</td>' +
+                                '<td>' + detail.product_name + returnSpan + '</td>' +
                                 '<td>' + 'Rp ' + formatCurrency(detail.harga_jual) + '</td>' +
-                                '<td>' + detail.diskon + '</td>' +
+                                '<td>' + detail.diskon + '%' + '</td>' +
                                 '<td>' + 'Rp ' + formatCurrency(detail.harga_diskon) + '</td>' +
                                 '<td>' + detail.jumlah + '</td>' +
                                 '<td>' + 'Rp ' + formatCurrency(detail.sub_total) + '</td>' +

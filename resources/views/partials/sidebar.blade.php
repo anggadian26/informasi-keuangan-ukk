@@ -34,14 +34,14 @@
         @if ($loggedInUser->role->role == 'admin' || $loggedInUser->role->role == 'manager')
             <li class="menu-item {{ request()->routeIs('index.penjualan') ? 'active' : '' }}">
                 <a href="{{ route('index.penjualan') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-up-arrow-alt text-success"></i>
-                    <div data-i18n="Analytics">Penjualan</div>
+                    <i class="menu-icon tf-icons bx bx-cart"></i>
+                    <div data-i18n="Analytics">Transaksi Penjualan</div>
                 </a>
             </li>
             <li class="menu-item {{ request()->routeIs('index.pembelian', 'transactionPage.pembelian') ? 'active' : '' }}">
                 <a href="{{ route('index.pembelian') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-down-arrow-alt text-danger"></i>
-                    <div data-i18n="Analytics">Pembelian</div>
+                    <i class="menu-icon tf-icons bx bx-cart"></i>
+                    <div data-i18n="Analytics">Transaksi Pembelian</div>
                 </a>
             </li>
         @endif
@@ -65,6 +65,12 @@
                 </a>
             </li>
         @endif
+        <li class="menu-item {{ request()->routeIs('index.infoStok') ? 'active' : '' }}">
+            <a href="{{ route('index.infoStok') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-chart"></i>
+                <div data-i18n="Analytics">Informasi Stok</div>
+            </a>
+        </li>
 
         {{-- financial --}}
         <li class="menu-header small text-uppercase">

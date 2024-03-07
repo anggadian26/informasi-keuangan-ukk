@@ -53,7 +53,7 @@
                                         <tr>
                                             <td>{{ $i->product_code }}</td>
                                             <td>{{ $i->product_name }}</td>
-                                            <td>{{ $i->product_purcase }}</td>
+                                            <td>Rp {{ number_format($i->product_purcase, 0, ',', '.') }}</td>
                                             <td>{{ $i->total_stok }}</td>
                                             <td>
                                                 <a href="#"
@@ -98,7 +98,7 @@
                             var newRow = '<tr>' +
                                 '<td>' + product.product_code + '</td>' +
                                 '<td>' + product.product_name + '</td>' +
-                                '<td>' + product.product_purcase + '</td>' +
+                                '<td>' + 'Rp ' + formatCurrency(product.product_purcase) + '</td>' +
                                 '<td>' + product.total_stok + '</td>' +
                                 '<td>' +
                                     '<a href="#" onclick="pilihProduct(\'' + product
@@ -148,4 +148,9 @@
             focusSearchInput();
         });
     });
+
+    function formatCurrency(amount) {
+        // Format amount to currency with Indonesian Rupiah (IDR) format
+        return new Intl.NumberFormat('id-ID').format(amount);
+    }
 </script>

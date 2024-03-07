@@ -83,7 +83,7 @@
         },
         plotOptions: {
             column: {
-                borderRadius: '25%'
+                borderRadius: '15%'
             }
         },
         series: [{
