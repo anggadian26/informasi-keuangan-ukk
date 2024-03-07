@@ -25,7 +25,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th><strong>No</strong></th>
+                        <th width="3%"><strong>No</strong></th>
                         <th><strong>Tanggal</strong></th>
                         <th><strong>Masuk</strong></th>
                         <th><strong>Keluar</strong></th>
