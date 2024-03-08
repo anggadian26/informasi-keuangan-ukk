@@ -25,12 +25,15 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th width="3%"><strong>No</strong></th>
-                        <th><strong>Tanggal</strong></th>
-                        <th><strong>Masuk</strong></th>
-                        <th><strong>Keluar</strong></th>
-                        <th><strong>Keterangan</strong></th>
-                        <th><strong>Detail</strong></th>
+                        <th rowspan="2" width="3%"><strong>No</strong></th>
+                        <th rowspan="2" class="text-center"><strong>Tanggal</strong></th>
+                        <th colspan="2" class="text-center"><strong>Total Barang</strong></th>
+                        <th rowspan="2" class="text-center"><strong>Keterangan</strong></th>
+                        <th rowspan="2" class="text-center"><strong>Detail</strong></th>
+                    </tr>
+                    <tr>
+                        <th class="text-center"><strong>Masuk</strong></th>
+                        <th class="text-center"><strong>Keluar</strong></th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">

@@ -85,6 +85,8 @@ class InfoStokController extends Controller
             $mergeData[$tanggal]['detail'] = $details;
         }
 
+        $mergeData = collect($mergeData)->sortByDesc('tanggal')->toArray();
+
         // return $mergeData;
         return view('info-stok.index', compact('mergeData'));
     }
